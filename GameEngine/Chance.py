@@ -7,6 +7,9 @@ class Chance:
         """القيام بعميلة رمي عصي عشوائي وارجاع قيمة الرمية الناتجة"""
         pass
 
-    def apply_roll(self, state, roll):
-        """تطبيق نتيجة الرمية على الحالة → ترجع حالة جديدة"""
-        pass
+    # def apply_roll(self, state, roll):
+    #     """تطبيق نتيجة الرمية على الحالة → ترجع حالة جديدة"""
+    #     # if state has player in house of horus and roll is not 1 then
+    #     # move it to rebirth
+    #     #
+    #     pass

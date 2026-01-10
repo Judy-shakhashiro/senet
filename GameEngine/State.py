@@ -1,9 +1,10 @@
 
 from colorama import Fore, Back, Style
+import copy
 class Cell:
     def __init__(self,t,p):
         types=['Normal','Rebirth','Water','Happiness','Three_Truths','Re_Atoum','Horus']
-        players=['Black','White',None]
+        players=[0,1,None]
         if t in types:
             self.type=t
         if p in players:
@@ -13,7 +14,7 @@ class State:
         self.cells=self.initialize_board()
         self.white_pieces=0
         self.black_pieces=0
-        self.current_player='White'  # or black
+        self.current_player=1  # or black
         self.winner=None
         self.game_over=False
         self.rolled_value=None
@@ -25,9 +26,9 @@ class State:
         print(Fore.RED + 'This text is red')
         for i in range(30):
            cell=self.cells[i]
-           if cell.player=='White':
+           if cell.player==1:
                print(Fore.WHITE + cell.type, end='')
-           elif cell.player=='Black':
+           elif cell.player==0:
                print(Fore.BLACK + cell.type, end='')
            else:
                print(Fore.RESET + cell.type, end='')
@@ -39,9 +40,9 @@ class State:
         list=[]
         for i in range(14):
             if(i%2==0):
-             list.append(Cell('Normal', 'White'))
+             list.append(Cell('Normal', 1))
             else:
-             list.append(Cell('Normal','Black'))
+             list.append(Cell('Normal',0))
         list.append(Cell('Rebirth',None))
         for i in range(10):
            list.append(Cell('Normal',None))
@@ -54,83 +55,110 @@ class State:
 
  
 
-    def move_piece(self,toss,cells,index):
+    def move_piece(self,index):
+       # index is the index of the piece we want to move
        # here piece means the piece we want to move
        # check if there is a player in house of horus and it is different 
        # from the cell we want to move ,then we move it to rebirth
-       if(cells[29].player is not None and index!=29):
-            self.to_rebirth()
+    #    if(cells[29].player is not None and index!=29):
+    #         self.to_rebirth()
        
        # if newpiece location is water ,go to rebirth
-       if cells[index+toss].type == 'Water':
-            self.to_rebirth()
+       if self.cells[index+self.rolled_value].type == 'Water' and self.cells[index+self.rolled_value].player is not self.current_player:
+            self.to_rebirth(index)
        # else if toss is 3 and cells[index].type is house of three truths then promote()
-       if toss == 3 and cells[index].type == 'Three_Truths':
-            self.promote(cells,index,self.current_player)
+       if self.cells[27].player is not None:
+            if self.rolled_value == 3 and index == 27:
+             self.promote(index)
+            else:
+             self.to_rebirth(index)
        # else if toss is 2 and cells[index].type is house of re-atoum then promote()
-       elif toss == 2 and cells[index].type == 'Re_Atoum':
-            self.promote(cells,index,self.current_player)
+       elif self.cells[28].player is not None:
+           if self.rolled_value == 2 and index == 28:
+            self.promote(index)
+           else: 
+                self.to_rebirth(index)
+
        # else if it is any toss cells[index].type is house of horus then promote()
-       elif toss == 1 and cells[index].type == 'Horus':
-            self.promote(cells,index,self.current_player)
-       # else (alter between black and white)  if cells[index].player=='White' cells[index].player='Black' else cells[index].player='White'
-       # return new state
-       pass
-
-    def is_valid_move(self,toss,cell,index):
-        # 1 should not skip house of happiness
-        # 2 should not be a cell of the same color
-
-        pass
-    def promote(self,board,index,player):
-        board.cells[index].p= None
-        if (player=='Black'):
-            board.black_pieces
+       elif self.cells[29].player is not None:
+        if index==29:
+           self.promote(index)
         else:
-          board.white_pieces
+            self.to_rebirth(index)
 
-    def to_rebirth(self):
-       # if there is a piece on the house 
-       pass
+       # else (alter between black and white or to an empty space) 
+       else:
+                if(self.cells[index+self.rolled_value].player != self.current_player or self.cells[index+self.rolled_value].player is None):
+                    self.cells[index+self.rolled_value].player=self.current_player
+                    self.cells[index].player=None
+        # in order to return the state after move 
+        # just write this state=state.move_piece(toss,state.cells,index)
+   
+         
+                
+    def legal_moves(self):
+        # return a list of indices of pieces that can be moved
+        #  based on rolled_value and current_player
+        legal_moves_list=[]
+        for i in range(30):
+           cell=self.cells[i]
+           if cell.player == self.current_player:
+              if self.is_valid_move(i):
+                legal_moves_list.append(i)
+        return legal_moves_list 
+
+    def is_valid_move(self,index):
+        # 1 should not skip house of happiness
+        if(index+self.rolled_value>25):
+            return False
+        # 2 should not land on a cell occupied by the same color
+        if(self.cells[index+self.rolled_value].player == self.current_player):
+            return False
+        # 3 should not go beyond the last cell
+        if(index+self.rolled_value>29):
+            return False
+        return True
+
+    def promote(self,index):
+        self.cells[index].p= None
+        if (self.current_player==0):
+            self.black_pieces+=1
+        else:
+          self.white_pieces+=1
+
+    def to_rebirth(self,index):
+       # move to rebirth and 
+       # if there is a piece on the rebirth 
+       # then move to the first empty cell before it
+       self.cells[index].player=None
+       if(self.cells[14].player is None):
+          self.cells[14].player=self.current_player
+          return
+       else:
+          for i in range(13,-1,-1):
+             if(self.cells[i].player is None):
+                self.cells[i].player=self.current_player
+                return
 
 
-    def play(self,board):
+
+    def play(self):
      while True:
         #check win
-        if(board.white_pieces==0):
+        if(self.white_pieces==7):
          print('white won !')
          return
-        elif(board.white_pieces==1):
+        elif(self.black_pieces==7):
             print('black won !')
             return 
         result=self.play_toss()
-        # if there is a palyer in three truths and the result is not thre
-        #  then 
-        # move it to rebirth
-        # if there is a player in re-Atoum and the result is not 2 
-        #then 
-        # move to rebirth
-
-
-        # else
         self.move_player()
 
     def copy(self):
-        """تعيد نسخة عميقة من الحالة"""
-        pass
-
-    def is_equal(self, other_state):
-        """تتحقق من تساوي حالتين"""
-        pass
-    def legal_moves(self, state):
-        """ترجع قائمة بالحركات القانونية الممكنة في الحالة الحالية"""
-        pass
-
-    def apply_move(self, state, move):
-        """تطبيق حركة وتحديث الحالة → ترجع حالة جديدة"""
-        pass
-
-    def is_end(self, state) -> bool:
-        """التحقق من نهاية اللعبة"""
-        pass
-
+     #return deep copy of the state
+      return copy.deepcopy(self)
+       
+    def is_end(self) -> bool:
+        if(self.black_pieces==7 or self.white_pieces==7):
+           return True
+        return False
