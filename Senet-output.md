@@ -1,0 +1,488 @@
+# 📁 PROJECT EXPORT FOR LLMs
+
+## 📊 Project Information
+
+- **Project Name**: `Senet`
+- **Generated On**: 2026-01-10 01:46:30 (Asia/Damascus / GMT+03:00)
+- **Total Files Processed**: 9
+- **Export Tool**: Easy Whole Project to Single Text File for LLMs v1.1.0
+- **Tool Author**: Jota / José Guilherme Pandolfi
+
+### ⚙️ Export Configuration
+
+| Setting | Value |
+|---------|-------|
+| Language | `en` |
+| Max File Size | `1 MB` |
+| Include Hidden Files | `false` |
+| Output Format | `both` |
+
+## 🌳 Project Structure
+
+```
+├── 📁 AI/
+│   └── 📄 AIPlayer.py (597 B)
+├── 📁 GameEngine/
+│   ├── 📄 Board.py (1.05 KB)
+│   ├── 📄 Chance.py (540 B)
+│   ├── 📄 Player.py (450 B)
+│   ├── 📄 Rules.py (443 B)
+│   └── 📄 State.py (2.03 KB)
+├── 📁 UI/
+│   └── 📄 render.py
+├── 📄 GameController.py (981 B)
+└── 📄 main.py (615 B)
+```
+
+## 📑 Table of Contents
+
+**Project Files:**
+
+- [📄 AI/AIPlayer.py](#📄-ai-aiplayer-py)
+- [📄 GameEngine/Board.py](#📄-gameengine-board-py)
+- [📄 GameEngine/Chance.py](#📄-gameengine-chance-py)
+- [📄 GameEngine/Player.py](#📄-gameengine-player-py)
+- [📄 GameEngine/Rules.py](#📄-gameengine-rules-py)
+- [📄 GameEngine/State.py](#📄-gameengine-state-py)
+- [📄 UI/render.py](#📄-ui-render-py)
+- [📄 GameController.py](#📄-gamecontroller-py)
+- [📄 main.py](#📄-main-py)
+
+---
+
+## 📈 Project Statistics
+
+| Metric | Count |
+|--------|-------|
+| Total Files | 9 |
+| Total Directories | 3 |
+| Text Files | 9 |
+| Binary Files | 0 |
+| Total Size | 6.62 KB |
+
+### 📄 File Types Distribution
+
+| Extension | Count |
+|-----------|-------|
+| `.py` | 9 |
+
+## 💻 File Code Contents
+
+### <a id="📄-ai-aiplayer-py"></a>📄 `AI/AIPlayer.py`
+
+**File Info:**
+- **Size**: 597 B
+- **Extension**: `.py`
+- **Language**: `python`
+- **Location**: `AI/AIPlayer.py`
+- **Relative Path**: `AI`
+- **Created**: 2026-01-10 01:14:57 (Asia/Damascus / GMT+03:00)
+- **Modified**: 2026-01-10 01:26:33 (Asia/Damascus / GMT+03:00)
+- **MD5**: `a8e220c4674b53e0a652f34ae9670071`
+- **SHA256**: `d964045643818928e7c9d14faf108a2009147e802b30f373ad83e1cf173dbb9d`
+- **Encoding**: UTF-8
+
+**File code content:**
+
+```python
+from GameEngine.Player import Player
+from GameEngine.State import State
+
+class AIPlayer(Player):
+    def __init__(self, depth: int):
+        self.depth = depth
+
+    def policy(self, state: State):
+        """تطبيق Expectiminimax لتحديد أفضل حركة بعد الرمية"""
+        pass
+
+    def expectiminimax(self, state: State, depth: int, player_type):
+        """خوارزمية البحث مع Chance nodes و Max/Min nodes"""
+        pass
+
+    def evaluate(self, state: State) -> float:
+        """دالة تقييم heuristic للحالة"""
+        pass
+
+```
+
+---
+
+### <a id="📄-gameengine-board-py"></a>📄 `GameEngine/Board.py`
+
+**File Info:**
+- **Size**: 1.05 KB
+- **Extension**: `.py`
+- **Language**: `python`
+- **Location**: `GameEngine/Board.py`
+- **Relative Path**: `GameEngine`
+- **Created**: 2026-01-10 01:11:26 (Asia/Damascus / GMT+03:00)
+- **Modified**: 2026-01-10 01:25:22 (Asia/Damascus / GMT+03:00)
+- **MD5**: `94f682f4a65edc98fc265d6fe2ebccd5`
+- **SHA256**: `db5c53173475c7f9362fcf4f5af0e782d297a53f97d47d401089606fdea01479`
+- **Encoding**: ASCII
+
+**File code content:**
+
+```python
+class board:
+    def __init__(self):
+        self.cells=self.initialize_board()
+        self.white_pieces=0
+        self.black_pieces=0
+        
+    def display(self):
+        print("Displaying the board")
+        # to implement
+
+    def initialize_board():
+        list=[]
+        for i in range(14):
+            if(i%0==0):
+             list.append(cell('Empty', 'White'))
+            else:
+             list.append(cell('Empty','Black'))
+        list.append(cell('Rebirth',None))
+        for i in range(10):
+           list.append(cell('Empty',None))
+        list.append('Happiness',None)
+        list.append('Water',None)
+        list.append('Three_Truths',None)
+        list.append('Re_Atoum',None)
+        list.append('Horus',None)
+        return list
+
+
+class Cell:
+    def __init__(self,t,p):
+        types=['Empty','Rebirth','Water','Happiness','Three_Truths','Re_Atoum','Horus']
+        players=['Black','White',None]
+        if t in types:
+            self.type=t
+        if p in players:
+            self.player=p
+
+    
+    
+```
+
+---
+
+### <a id="📄-gameengine-chance-py"></a>📄 `GameEngine/Chance.py`
+
+**File Info:**
+- **Size**: 540 B
+- **Extension**: `.py`
+- **Language**: `python`
+- **Location**: `GameEngine/Chance.py`
+- **Relative Path**: `GameEngine`
+- **Created**: 2026-01-10 01:13:53 (Asia/Damascus / GMT+03:00)
+- **Modified**: 2026-01-10 01:31:37 (Asia/Damascus / GMT+03:00)
+- **MD5**: `7ec861b1c273e63b69a0c2691c6fc245`
+- **SHA256**: `3b4dcab18c70f2b21db8822a72ad97cb7b5985953f3042da67ad91d87039c1f3`
+- **Encoding**: UTF-8
+
+**File code content:**
+
+```python
+class Chance:
+    def possible_rolls(self):
+        """ترجع قائمة بجميع القيم الممكنة لرمي العصي مع احتمالاتها"""
+        return {1: 4/16, 2: 6/16, 3: 4/16, 4: 1/16, 5: 1/16}
+
+    def roll(self):
+        """القيام بعميلة رمي عصي عشوائي وارجاع قيمة الرمية الناتجة"""
+        pass
+
+    def apply_roll(self, state, roll):
+        """تطبيق نتيجة الرمية على الحالة → ترجع حالة جديدة"""
+        pass
+
+```
+
+---
+
+### <a id="📄-gameengine-player-py"></a>📄 `GameEngine/Player.py`
+
+**File Info:**
+- **Size**: 450 B
+- **Extension**: `.py`
+- **Language**: `python`
+- **Location**: `GameEngine/Player.py`
+- **Relative Path**: `GameEngine`
+- **Created**: 2026-01-10 01:14:07 (Asia/Damascus / GMT+03:00)
+- **Modified**: 2026-01-10 01:26:55 (Asia/Damascus / GMT+03:00)
+- **MD5**: `4dd742129147900ca0702e88c3b96076`
+- **SHA256**: `8957be8b10f683460bbaa37bedd072ad6e67328bdf4705827c54e271cff543af`
+- **Encoding**: UTF-8
+
+**File code content:**
+
+```python
+class Player:
+    def policy(self, state: GameState):
+        """تحدد الحركة التي سينفذها اللاعب بناءً على حالته"""
+        pass
+
+class HumanPlayer(Player):
+    def policy(self, state):
+        """إدخال من المستخدم"""
+        pass
+
+class RandomPlayer(Player):
+    def policy(self, state):
+        """اختيار عشوائي من الحركات القانونية"""
+        pass
+
+```
+
+---
+
+### <a id="📄-gameengine-rules-py"></a>📄 `GameEngine/Rules.py`
+
+**File Info:**
+- **Size**: 443 B
+- **Extension**: `.py`
+- **Language**: `python`
+- **Location**: `GameEngine/Rules.py`
+- **Relative Path**: `GameEngine`
+- **Created**: 2026-01-10 01:13:27 (Asia/Damascus / GMT+03:00)
+- **Modified**: 2026-01-10 01:27:26 (Asia/Damascus / GMT+03:00)
+- **MD5**: `500af706a3c41f4af4d488d281447f50`
+- **SHA256**: `1c79bb2384d124c01f3a1251dfa71136da103ca4c513098b87c4fbcd7537eede`
+- **Encoding**: UTF-8
+
+**File code content:**
+
+```python
+class Rules:
+    def legal_moves(self, state):
+        """ترجع قائمة بالحركات القانونية الممكنة في الحالة الحالية"""
+        pass
+
+    def apply_move(self, state, move):
+        """تطبيق حركة وتحديث الحالة → ترجع حالة جديدة"""
+        pass
+
+    def is_end(self, state) -> bool:
+        """التحقق من نهاية اللعبة"""
+        pass
+
+```
+
+---
+
+### <a id="📄-gameengine-state-py"></a>📄 `GameEngine/State.py`
+
+**File Info:**
+- **Size**: 2.03 KB
+- **Extension**: `.py`
+- **Language**: `python`
+- **Location**: `GameEngine/State.py`
+- **Relative Path**: `GameEngine`
+- **Created**: 2026-01-10 01:10:44 (Asia/Damascus / GMT+03:00)
+- **Modified**: 2026-01-10 01:27:47 (Asia/Damascus / GMT+03:00)
+- **MD5**: `f108f6e79c36b70064501a34731be194`
+- **SHA256**: `d6f5b4d5cd31fe69ebff8bba4aad97ea43c0a7192d89f4b6000db9d06a469264`
+- **Encoding**: ASCII
+
+**File code content:**
+
+```python
+from GameEngine.Board import Cell
+
+class State:
+    def __init__(self):
+      pass
+
+    def play_toss(self):
+        # to implement based on the probabilities tabel
+        pass
+
+    def move_piece(self,toss,cells,index):
+       #here piece means the piece we want to move
+       # check if there is a player in house of houros and it is different 
+       # from the cell we want to move ,then we move it to rebirth
+       # if newpiece location is water ,o to rebirth
+       # else if toss is 3 and cells[index].t is house of three truths then promote()
+       # else if toss is 2 and cells[index].t is house of re-atoum then promote()
+       # else if it is ant toss cells[index].t is house of horus then promote()
+       # else (alter between black and white)  if cells[index].p=='White' cells[index].p='Black' else cells[index].p='White'
+
+       pass
+    def is_valid_move(self,toss,cell,index):
+        # 1 should not skip house of happiness
+        # 2 should not be a cell of the same color
+
+        pass
+    def promote(self,board,index,player):
+        board.cells[index].p= None
+        if (player=='Black'):
+            board.black_pieces
+        else:
+          board.white_pieces
+
+    def to_rebirth(self):
+       # if there is a piece on the house 
+       pass
+
+    def play(self,board):
+     while True:
+        #check win
+        if(board.white_pieces==0):
+         print('white won !')
+         return
+        elif(board.white_pieces==1):
+            print('black won !')
+            return 
+        result=self.play_toss()
+        # if there is a palyer in three truths and the result is not thre
+        #  then 
+        # move it to rebirth
+        # if there is a player in re-Atoum and the result is not 2 
+        #then 
+        # move to rebirth
+
+
+        # else
+        self.move_player()
+
+    def copy(self):
+        """تعيد نسخة عميقة من الحالة"""
+        pass
+
+    def is_equal(self, other_state):
+        """تتحقق من تساوي حالتين"""
+        pass
+
+```
+
+---
+
+### <a id="📄-ui-render-py"></a>📄 `UI/render.py`
+
+**File Info:**
+- **Size**: 0 B
+- **Extension**: `.py`
+- **Language**: `python`
+- **Location**: `UI/render.py`
+- **Relative Path**: `UI`
+- **Created**: 2026-01-10 01:42:17 (Asia/Damascus / GMT+03:00)
+- **Modified**: 2026-01-10 01:42:17 (Asia/Damascus / GMT+03:00)
+- **MD5**: `d41d8cd98f00b204e9800998ecf8427e`
+- **SHA256**: `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
+- **Encoding**: ASCII
+
+**File code content:**
+
+```python
+
+```
+
+---
+
+### <a id="📄-gamecontroller-py"></a>📄 `GameController.py`
+
+**File Info:**
+- **Size**: 981 B
+- **Extension**: `.py`
+- **Language**: `python`
+- **Location**: `GameController.py`
+- **Relative Path**: `root`
+- **Created**: 2026-01-10 01:15:49 (Asia/Damascus / GMT+03:00)
+- **Modified**: 2026-01-10 01:46:30 (Asia/Damascus / GMT+03:00)
+- **MD5**: `65b8ebed5a493b5e6434d6ef28131f36`
+- **SHA256**: `3f04556f12c2870a55b98976c342420b681a8508d40a2c8d28467f4edc416a22`
+- **Encoding**: ASCII
+
+**File code content:**
+
+```python
+"""
+Game Controller
+"""
+class GameController:
+    def __init__(self, state, rules, chance, player_max, player_min, view=None):
+        self.state = state
+        self.rules = rules
+        self.chance = chance
+        self.players = {
+            "MAX": player_max,
+            "MIN": player_min
+        }
+        # self.view = view
+
+    def game_loop(self):
+        while not self.rules.is_end(self.state):
+            current_player = self.state.current_player
+
+            # 1. Chance
+            roll = self.chance.roll()
+            self.state = self.chance.apply_roll(self.state, roll)
+            # self.view.show_roll(roll)
+
+            # 2. Decision
+            legal_moves = self.rules.legal_moves(self.state)
+            move = self.players[current_player].policy(self.state)
+
+            # 3. Transition
+            self.state = self.rules.apply_move(self.state, move)
+
+            # 4. Render
+            # self.view.render(self.state)
+
+```
+
+---
+
+### <a id="📄-main-py"></a>📄 `main.py`
+
+**File Info:**
+- **Size**: 615 B
+- **Extension**: `.py`
+- **Language**: `python`
+- **Location**: `main.py`
+- **Relative Path**: `root`
+- **Created**: 2026-01-10 01:19:27 (Asia/Damascus / GMT+03:00)
+- **Modified**: 2026-01-10 01:45:38 (Asia/Damascus / GMT+03:00)
+- **MD5**: `797cadbe61ebab2ac5ae6eddc7c83c39`
+- **SHA256**: `5daf742293499c7312f8471e8be69f4e28c30a5e27bb8e4b606649781da65c1c`
+- **Encoding**: ASCII
+
+**File code content:**
+
+```python
+"""
+This is main file where is an entry point to our project
+"""
+from GameEngine.State import State
+from GameEngine.Rules import Rules
+from GameEngine.Chance import Chance
+from GameEngine.Player import HumanPlayer
+from AI.AIPlayer import AIPlayer
+from GameController import GameController
+
+state = State()
+rules = Rules()
+chance = Chance()
+
+player_max = AIPlayer(depth=3)
+player_min = HumanPlayer()
+
+# view = GUIView()
+
+game = GameController(
+    state=state,
+    rules=rules,
+    chance=chance,
+    player_max=player_max,
+    player_min=player_min,
+    # view=view
+)
+
+game.game_loop()
+
+```
+
+---
+
