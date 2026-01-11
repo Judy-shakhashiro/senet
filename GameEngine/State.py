@@ -109,7 +109,7 @@ class State:
 
     def is_valid_move(self,index):
         # 1 should not skip house of happiness
-        if(index+self.rolled_value>25):
+        if(index < 25 and index+self.rolled_value>25):
             return False
         # 2 should not land on a cell occupied by the same color
         if(self.cells[index+self.rolled_value].player == self.current_player):
@@ -120,7 +120,7 @@ class State:
         return True
 
     def promote(self,index):
-        self.cells[index].p= None
+        self.cells[index].player= None
         if (self.current_player==0):
             self.black_pieces+=1
         else:
