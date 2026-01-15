@@ -12,7 +12,7 @@ state = State()
 
 chance = Chance()
 
-player_max = AIPlayer(depth=3)
+player_max = AIPlayer(chance_model=chance,max_depth=3)
 player_min = HumanPlayer()
 
 # view = GUIView()
@@ -26,4 +26,5 @@ game = GameController(
 )
 
 # game.game_loop()
-state.play()
+# state.play()
+state.play_ai_vs_human(player_max)
