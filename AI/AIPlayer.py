@@ -19,7 +19,7 @@ class AIPlayer(Player):
     
     def expectiminimax(self, state: State, depth: int):
         if depth == 0 or state.is_end():
-            return self.evaluate(state)
+            return evaluate(state)
         
         expected_value=0.0
         for options,weights in self.chance_model.outcomes():
