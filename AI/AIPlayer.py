@@ -97,11 +97,67 @@ class AIPlayer(Player):
             return best_move
 
 
-    def evaluate(self, state: State) -> float:
-        winner = state.winner_player
-        if winner == "white":
-            return 10000
-        if winner == "black":
-            return -10000
-        return 0.0
+
+
+chance = Chance()
+ROLL_PROBS = chance.possible_rolls() 
+
+
+def effective_pos(pos: int) -> float:
+    if pos == 26:
+        return 26.5
+    if pos == 27:
+        return 15.0
+    if pos == 28:
+        return ROLL_PROBS[3] * 35 + (1 - ROLL_PROBS[3]) * 15
+    if pos == 29:
+        return ROLL_PROBS[2] * 35 + (1 - ROLL_PROBS[2]) * 15
+    if pos == 30:
+        return 35.0
+    return float(pos)
+
+
+def evaluate(state) -> float:
+    
+    own_poss = [i+1 for i in range(30) if state.cells[i].player == 1]
+    opp_poss = [i+1 for i in range(30) if state.cells[i].player == 0]
+
+    own_progress = sum(effective_pos(p) for p in own_poss) + 35.0 * state.white_pieces
+    opp_progress = sum(effective_pos(p) for p in opp_poss) + 35.0 * state.black_pieces
+    progress_score = own_progress - opp_progress
+
+    ai_threat_opp = 0.0
+    opp_threat_ai = 0.0
+
+    for o in own_poss:
+        for roll in range(1, 6):
+            target = o + roll
+            if target > 30:
+                continue
+            if target in opp_poss:
+                ai_threat_opp += ROLL_PROBS[roll]
+
+    for o in opp_poss:
+        for roll in range(1, 6):
+            target = o + roll
+            if target > 30:
+                continue
+            if target in own_poss:
+                opp_threat_ai += ROLL_PROBS[roll]
+
+    safety_score = 50.0 * ai_threat_opp - 50.0 * opp_threat_ai
+
+    swap_bonus = 0.0
+    if state.last_hit == 1:
+        swap_bonus = 20.0
+    elif state.last_hit == 0:
+        swap_bonus = -20.0
+
+    if state.white_pieces == 7:
+        return 10000.0
+    if state.black_pieces == 7:
+        return -10000.0
+
+    final_value = progress_score + 0.65 * safety_score + swap_bonus
+    return final_value
     
