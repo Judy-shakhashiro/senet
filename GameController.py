@@ -2,9 +2,9 @@
 Game Controller
 """
 class GameController:
-    def __init__(self, state, rules, chance, player_max, player_min, view=None):
+    def __init__(self, state, chance, player_max, player_min, view=None):
         self.state = state
-        self.rules = rules
+
         self.chance = chance
         self.players = {
             "MAX": player_max,

@@ -1,4 +1,4 @@
-from senet.GameEngine.State import State
+from GameEngine.State import State
 class Player:
     def policy(self, state: State):
         """تحدد الحركة التي سينفذها اللاعب بناءً على حالته"""
