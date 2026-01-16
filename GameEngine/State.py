@@ -149,7 +149,7 @@ class State:
                     self.cells[index+self.rolled_value].player=self.current_player
                     self.cells[index].player=None
                     
-                    # print(f'moved to empty cell at index {index+self.rolled_value} of player{self.current_player}')
+        # print(f'moved to empty cell at index {index+self.rolled_value} of player{self.current_player}')
         # in order to return the state after move 
         # just write this state=state.move_piece(toss,state.cells,index)    
         self.turnCount +=1
@@ -305,40 +305,3 @@ class State:
             print(Fore.BLUE + "BLUE (AI) WON")
         else:
             print(Fore.MAGENTA + "MAGENTA (HUMAN) WON")             
-    # def play_ai_vs_human(self, ai_player):
-    #     chance = Chance()
-    #     while not self.is_end():
-    #         self.display()
-    #         self.rolled_value = chance.roll_table()
-    #         moves = self.legal_moves()
-    #         if self.current_player == 1:
-    #             print(Fore.BLUE + f"AI (blue) rolled {self.rolled_value}")
-    #             print(Fore.BLUE + f"Valid moves: {moves}")
-    #         else:
-    #             print(Fore.MAGENTA + f"Human (magenta) rolled {self.rolled_value}")
-    #             print(Fore.MAGENTA + f"Valid moves: {moves}")
-        
-    #         if not moves:
-    #             print(Fore.YELLOW + "No valid moves → turn skipped")
-    #             self.current_player ^= 1
-    #             self.turnCount += 1
-    #             continue
-
-    #         if self.current_player == 1:
-    #             move = ai_player.choose_move(self, self.rolled_value)
-    #             print(Fore.BLUE + f"AI chooses move: {move}")
-    #             self.move_piece(move)
-
-    
-    #         else:
-    #             move = int(input(Fore.WHITE + "Enter index to move: "))
-    #             while move not in moves:
-    #                 print(Fore.RED + "Invalid move, choose from:", moves)
-    #                 move = int(input(Fore.WHITE + "Enter index to move: "))
-    #             self.move_piece(move)
-
-    #     winner = self.winner_player
-    #     if winner == "white":
-    #         print(Fore.BLUE + "BLUE (AI) WON ")
-    #     else:
-    #         print(Fore.MAGENTA + "MAGENTA (HUMAN) WON ")

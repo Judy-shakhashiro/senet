@@ -3,7 +3,7 @@
 ## 📊 Project Information
 
 - **Project Name**: `senet`
-- **Generated On**: 2026-01-16 15:33:36 (Asia/Damascus / GMT+03:00)
+- **Generated On**: 2026-01-16 15:48:49 (Asia/Damascus / GMT+03:00)
 - **Total Files Processed**: 19
 - **Export Tool**: Easy Whole Project to Single Text File for LLMs v1.1.0
 - **Tool Author**: Jota / José Guilherme Pandolfi
@@ -38,7 +38,7 @@
 │   │   └── 📄 State.cpython-314.pyc (11.72 KB)
 │   ├── 📄 Chance.py (892 B)
 │   ├── 📄 Player.py (482 B)
-│   └── 📄 State.py (13.25 KB)
+│   └── 📄 State.py (11.69 KB)
 ├── 📁 UI/
 │   └── 📄 render.py
 ├── 📄 board.py (1.05 KB)
@@ -71,7 +71,7 @@
 | Total Directories | 6 |
 | Text Files | 9 |
 | Binary Files | 10 |
-| Total Size | 74.8 KB |
+| Total Size | 73.24 KB |
 
 ### 📄 File Types Distribution
 
@@ -430,15 +430,15 @@ class RandomPlayer(Player):
 ### <a id="📄-gameengine-state-py"></a>📄 `GameEngine/State.py`
 
 **File Info:**
-- **Size**: 13.25 KB
+- **Size**: 11.69 KB
 - **Extension**: `.py`
 - **Language**: `python`
 - **Location**: `GameEngine/State.py`
 - **Relative Path**: `GameEngine`
 - **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-16 15:24:57 (Asia/Damascus / GMT+03:00)
-- **MD5**: `0fb31694b23511f1b664244116a52365`
-- **SHA256**: `af94733c97f85d9ae0a2484bd9d842688c6b53f9c5e018e6e563e91109992497`
+- **Modified**: 2026-01-16 15:48:48 (Asia/Damascus / GMT+03:00)
+- **MD5**: `01ea6130bcedd32fb543c55e08800ec0`
+- **SHA256**: `4bb8a8f9d71369dab0dc1c3931fda4c347e713e6f07d0631add254b176b9f4bf`
 - **Encoding**: ASCII
 
 **File code content:**
@@ -595,7 +595,7 @@ class State:
                     self.cells[index+self.rolled_value].player=self.current_player
                     self.cells[index].player=None
                     
-                    # print(f'moved to empty cell at index {index+self.rolled_value} of player{self.current_player}')
+        # print(f'moved to empty cell at index {index+self.rolled_value} of player{self.current_player}')
         # in order to return the state after move 
         # just write this state=state.move_piece(toss,state.cells,index)    
         self.turnCount +=1
@@ -751,43 +751,6 @@ class State:
             print(Fore.BLUE + "BLUE (AI) WON")
         else:
             print(Fore.MAGENTA + "MAGENTA (HUMAN) WON")             
-    # def play_ai_vs_human(self, ai_player):
-    #     chance = Chance()
-    #     while not self.is_end():
-    #         self.display()
-    #         self.rolled_value = chance.roll_table()
-    #         moves = self.legal_moves()
-    #         if self.current_player == 1:
-    #             print(Fore.BLUE + f"AI (blue) rolled {self.rolled_value}")
-    #             print(Fore.BLUE + f"Valid moves: {moves}")
-    #         else:
-    #             print(Fore.MAGENTA + f"Human (magenta) rolled {self.rolled_value}")
-    #             print(Fore.MAGENTA + f"Valid moves: {moves}")
-        
-    #         if not moves:
-    #             print(Fore.YELLOW + "No valid moves → turn skipped")
-    #             self.current_player ^= 1
-    #             self.turnCount += 1
-    #             continue
-
-    #         if self.current_player == 1:
-    #             move = ai_player.choose_move(self, self.rolled_value)
-    #             print(Fore.BLUE + f"AI chooses move: {move}")
-    #             self.move_piece(move)
-
-    
-    #         else:
-    #             move = int(input(Fore.WHITE + "Enter index to move: "))
-    #             while move not in moves:
-    #                 print(Fore.RED + "Invalid move, choose from:", moves)
-    #                 move = int(input(Fore.WHITE + "Enter index to move: "))
-    #             self.move_piece(move)
-
-    #     winner = self.winner_player
-    #     if winner == "white":
-    #         print(Fore.BLUE + "BLUE (AI) WON ")
-    #     else:
-    #         print(Fore.MAGENTA + "MAGENTA (HUMAN) WON ")
 ```
 
 ---
