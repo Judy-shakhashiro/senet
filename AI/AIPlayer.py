@@ -104,15 +104,15 @@ ROLL_PROBS = chance.possible_rolls()
 
 
 def effective_pos(pos: int) -> float:
+    if pos == 25:
+        return 25.5
     if pos == 26:
-        return 26.5
+        return 14.0
     if pos == 27:
-        return 15.0
+        return ROLL_PROBS[3] * 35 + (1 - ROLL_PROBS[3]) * 14
     if pos == 28:
-        return ROLL_PROBS[3] * 35 + (1 - ROLL_PROBS[3]) * 15
+        return ROLL_PROBS[2] * 35 + (1 - ROLL_PROBS[2]) * 14
     if pos == 29:
-        return ROLL_PROBS[2] * 35 + (1 - ROLL_PROBS[2]) * 15
-    if pos == 30:
         return 35.0
     return float(pos)
 
@@ -132,7 +132,7 @@ def evaluate(state) -> float:
     for o in own_poss:
         for roll in range(1, 6):
             target = o + roll
-            if target > 30:
+            if target > 29:
                 continue
             if target in opp_poss:
                 ai_threat_opp += ROLL_PROBS[roll]
@@ -140,7 +140,7 @@ def evaluate(state) -> float:
     for o in opp_poss:
         for roll in range(1, 6):
             target = o + roll
-            if target > 30:
+            if target > 29:
                 continue
             if target in own_poss:
                 opp_threat_ai += ROLL_PROBS[roll]

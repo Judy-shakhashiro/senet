@@ -161,7 +161,7 @@ class State:
         # return a list of indices of pieces that can be moved
         #  based on rolled_value and current_player
         legal_moves_list=[]
-        for i in range(25):
+        for i in range(26):
             cell=self.cells[i]
             if cell.player == self.current_player:
                 if self.is_valid_move(i):
