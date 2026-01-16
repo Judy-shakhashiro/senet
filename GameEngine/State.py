@@ -86,61 +86,64 @@ class State:
         # from the cell we want to move ,then we move it to rebirth
         #    if(cells[29].player is not None and index!=29):
         #         self.to_rebirth()
+        #------------------
+        ## special squares 
+        #------------------
         
         # if newpiece location is water ,go to rebirth
-        if index+self.rolled_value<30 and self.cells[index+self.rolled_value].type == 'W' :
-            self.cells[index].player = None
+        if index+self.rolled_value==26 :
+            
             self.to_rebirth(index+self.rolled_value)
-            self.turnCount+=1
-            self.current_player ^=1
+            # self.turnCount+=1
+            # self.current_player ^=1
             return self
             
         # else if toss is 3 and cells[index].type is house of three truths then promote()
-        if self.cells[27].player ==self.current_player:
+        if self.cells[27].player==self.current_player:
             if self.rolled_value == 3 and index == 27:
                 self.promote(index)
-                
+                return self
             else:
-                self.cells[27].player = None
+                
                 self.to_rebirth(27)
-            self.turnCount +=1
-            self.current_player ^=1
-            return self    
+            # self.turnCount +=1
+            # self.current_player ^=1
+              
                 
         # else if toss is 2 and cells[index].type is house of re-atoum then promote()
         if self.cells[28].player ==self.current_player:
             if self.rolled_value == 2 and index == 28:
                 self.promote(index)
-                
+                return self 
             else: 
-                self.cells[28].player=None
                 self.to_rebirth(28)
-            self.turnCount +=1
-            self.current_player ^=1  
-            return self 
+            # self.turnCount +=1
+            # self.current_player ^=1  
+            
                 
 
         # else if it is any toss cells[index].type is house of horus then promote()
-        if self.cells[29].player ==self.current_player:
+        if self.cells[29].player==self.current_player:
             if index==29:
                 self.promote(index)
-                self.turnCount += 1
-                self.current_player ^= 1
+                # self.turnCount += 1
+                # self.current_player ^= 1
                 return self
                 
         # if a pawn is in the happiness and we rolled is 5 and player wanna move it
-        if self.cells[25].player ==self.current_player:
+        if self.cells[25].player==self.current_player:
             if (self.rolled_value==5 and index==25):
                 self.promote(index)
-                self.turnCount += 1
-                self.current_player ^= 1
+                # self.turnCount += 1
+                # self.current_player ^= 1
                 return self
         
 
         # else (alter between black and white or to an empty space) 
         if index+self.rolled_value<30:
-                if(self.cells[index+self.rolled_value].player is not None and self.cells[index+self.rolled_value].player != self.current_player):
-                    
+                # we checked previously in the valid move if the taret is not the same color as the current pawn
+               
+                if(self.cells[index+self.rolled_value].player is not None ):
                     self.cells[index+self.rolled_value].player=self.current_player
                     self.cells[index].player=self.current_player^1
                     self.last_hit=self.current_player
@@ -149,11 +152,9 @@ class State:
                     self.cells[index+self.rolled_value].player=self.current_player
                     self.cells[index].player=None
                     
-                    # print(f'moved to empty cell at index {index+self.rolled_value} of player{self.current_player}')
-        # in order to return the state after move 
-        # just write this state=state.move_piece(toss,state.cells,index)    
-        self.turnCount +=1
-        self.current_player ^= 1
+    
+        # self.turnCount +=1
+        # self.current_player ^= 1
         return self
     
     def legal_moves(self):
@@ -161,9 +162,7 @@ class State:
         # return a list of indices of pieces that can be moved
         #  based on rolled_value and current_player
         legal_moves_list=[]
-        for i in range(25):
-            cell=self.cells[i]
-            if cell.player == self.current_player:
+        for i in range(30):
                 if self.is_valid_move(i):
                     legal_moves_list.append(i)
         return legal_moves_list 
@@ -172,8 +171,8 @@ class State:
         # 1 should not skip house of happiness
         if(index < 25 and index+self.rolled_value>25):
             return False
-        if (index==25 and self.rolled_value==5):
-            return True
+        # if (index==25 and self.rolled_value==5):
+        #     return True
         # 2 should not go beyond the last cell
         if(index>29):
             return False
@@ -182,9 +181,17 @@ class State:
         if(cell.player != self.current_player):
             return False
         # 4 should not land on a cell occupied by the same color
-        if(index+self.rolled_value<25 and self.cells[index+self.rolled_value].player == self.current_player):
+        #(can ğo from happiness to another special square)
+        if(index+self.rolled_value<30 and self.cells[index+self.rolled_value].player == self.current_player):
             return False
+        
+        # 5 if it is three truths or re-atoum and we didn't ġet suitable roll ,then we can't move it
+        if(index==28 and self.rolled_value!=2):
+            return False
+        if(index==27 and self.rolled_value!=3):
+            return  False
         return True
+
 
     def promote(self,index):
         self.cells[index].player= None
@@ -194,6 +201,7 @@ class State:
             self.white_pieces+=1
 
     def to_rebirth(self,index):
+      
         # move to rebirth and 
         # if there is a piece on the rebirth 
         # then move to the first empty cell before it
@@ -212,7 +220,7 @@ class State:
         while True:
             self.display()
             #check win
-            # self.current_player=self.current_player ^ 1
+            
             if(self.white_pieces==7):
                 print(Fore.BLUE+'blue won !')
                 return
@@ -230,16 +238,19 @@ class State:
                 print(Fore.MAGENTA+f'player magenta rolled a {self.rolled_value}')
             index=self.input()
 
-            # legal_moves=self.legal_moves()
-            # if(len(legal_moves)==0):
-            #    print('no legal moves available ,turn skipped')
-            #    continue
-            # elif(index in legal_moves):
-            while not self.is_valid_move(index):
-                print(Fore.RED+'invalid move ,try again')
-        
-                index=self.input()
+            legal_moves=self.legal_moves()
+            if(len(legal_moves)==0):
+               print('no legal moves available ,turn skipped')
+               continue
+            elif(index in legal_moves):
+                while not self.is_valid_move(index):
+                    print(Fore.RED+'invalid move ,try again')
+            
+                    index=self.input()
             self.move_piece(index)
+            self.turnCount +=1
+            self.current_player ^= 1
+            
 
     def copy(self):
         #return deep copy of the state
@@ -293,6 +304,8 @@ class State:
                 move = ai_player.choose_move(self, self.rolled_value)
                 print(Fore.BLUE + f"AI chooses move: {move}")
                 self.move_piece(move)
+                self.turnCount +=1
+                self.current_player ^= 1
 
     
             else:
@@ -301,6 +314,8 @@ class State:
                     print(Fore.RED + "Invalid move, choose from:", moves)
                     move = int(input(Fore.WHITE + "Enter index to move: "))
                 self.move_piece(move)
+                self.turnCount +=1
+                self.current_player ^= 1
 
         winner = self.winner_player
         if winner == "white":
