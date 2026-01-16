@@ -1,5 +1,4 @@
 import numpy as np 
-from typing import List, Tuple
 class Chance:
     def possible_rolls(self):
         """ترجع قائمة بجميع القيم الممكنة لرمي العصي مع احتمالاتها"""
@@ -7,15 +6,13 @@ class Chance:
 
 
     def roll_table(self):
-        rolls = self.possible_rolls()
-        options = list(rolls.keys())
-        weights = list(rolls.values())
-        result = np.random.choice(options, p=weights)
-        return  result
+       rolls = self.possible_rolls()
+       options = list(rolls.keys())
+       weights = list(rolls.values())
+       result = np.random.choice(options, p=weights)
 
-    def outcomes(self):
-        rolls = self.possible_rolls()
-        return list(rolls.items())
+       return  result
+
 
     # def apply_roll(self, state, roll):
     #     """تطبيق نتيجة الرمية على الحالة → ترجع حالة جديدة"""
