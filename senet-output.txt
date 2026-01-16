@@ -1,40 +1,42 @@
-# 📁 PROJECT EXPORT FOR LLMs
+====================================================================================================
+PROJECT EXPORT FOR LLMs
+====================================================================================================
 
-## 📊 Project Information
+PROJECT INFORMATION:
+--------------------------------------------------
+Project Name: senet
+Generated On: 2026-01-16 11:03:16 (Asia/Damascus / GMT+03:00)
+Total Files Processed: 19
+Export Tool: Easy Whole Project to Single Text File for LLMs v1.1.0
+Tool Author: Jota / José Guilherme Pandolfi
 
-- **Project Name**: `senet`
-- **Generated On**: 2026-01-15 22:00:42 (Asia/Damascus / GMT+03:00)
-- **Total Files Processed**: 19
-- **Export Tool**: Easy Whole Project to Single Text File for LLMs v1.1.0
-- **Tool Author**: Jota / José Guilherme Pandolfi
+EXPORT CONFIGURATION:
+--------------------------------------------------
+Language: en
+Max File Size: 1 MB
+Include Hidden Files: false
+Output Format: both
+Notification Level: minimal
+Custom File Name Pattern: {workspaceName}-output
 
-### ⚙️ Export Configuration
-
-| Setting | Value |
-|---------|-------|
-| Language | `en` |
-| Max File Size | `1 MB` |
-| Include Hidden Files | `false` |
-| Output Format | `both` |
-
-## 🌳 Project Structure
-
-```
+================================================================================
+PROJECT STRUCTURE
+================================================================================
 ├── 📁 __pycache__/
 │   ├── 📄 GameController.cpython-313.pyc (1.8 KB)
 │   └── 📄 GameController.cpython-314.pyc (1.67 KB)
 ├── 📁 AI/
 │   ├── 📁 __pycache__/
-│   │   ├── 📄 AIPlayer.cpython-313.pyc (4.76 KB)
+│   │   ├── 📄 AIPlayer.cpython-313.pyc (8.64 KB)
 │   │   └── 📄 AIPlayer.cpython-314.pyc (2.32 KB)
-│   └── 📄 AIPlayer.py (3.57 KB)
+│   └── 📄 AIPlayer.py (6.13 KB)
 ├── 📁 GameEngine/
 │   ├── 📁 __pycache__/
 │   │   ├── 📄 Chance.cpython-313.pyc (1.54 KB)
 │   │   ├── 📄 Chance.cpython-314.pyc (1.2 KB)
 │   │   ├── 📄 Player.cpython-313.pyc (1.39 KB)
 │   │   ├── 📄 Player.cpython-314.pyc (1.5 KB)
-│   │   ├── 📄 State.cpython-313.pyc (14.89 KB)
+│   │   ├── 📄 State.cpython-313.pyc (14.65 KB)
 │   │   └── 📄 State.cpython-314.pyc (11.72 KB)
 │   ├── 📄 Chance.py (892 B)
 │   ├── 📄 Player.py (482 B)
@@ -45,81 +47,67 @@
 ├── 📄 GameController.py (948 B)
 ├── 📄 main.py (626 B)
 └── 📄 state.py (1.86 KB)
-```
 
-## 📑 Table of Contents
+================================================================================
+PROJECT STATISTICS
+================================================================================
+Total Files: 19
+Total Directories: 6
+Text Files: 9
+Binary Files: 10
+Total Size: 69.74 KB
 
-**Project Files:**
+FILE TYPES DISTRIBUTION:
+------------------------------
+.pyc            : 10
+.py             : 9
 
-- [📄 AI/AIPlayer.py](#📄-ai-aiplayer-py)
-- [📄 GameEngine/Chance.py](#📄-gameengine-chance-py)
-- [📄 GameEngine/Player.py](#📄-gameengine-player-py)
-- [📄 GameEngine/State.py](#📄-gameengine-state-py)
-- [📄 UI/render.py](#📄-ui-render-py)
-- [📄 board.py](#📄-board-py)
-- [📄 GameController.py](#📄-gamecontroller-py)
-- [📄 main.py](#📄-main-py)
-- [📄 state.py](#📄-state-py)
+================================================================================
+FILE CODE CONTENTS
+================================================================================
 
----
 
-## 📈 Project Statistics
+================================================================================
+BINARY/EXCLUDED FILES (not included in text content)
+================================================================================
+- __pycache__/GameController.cpython-313.pyc
+- __pycache__/GameController.cpython-314.pyc
 
-| Metric | Count |
-|--------|-------|
-| Total Files | 19 |
-| Total Directories | 6 |
-| Text Files | 9 |
-| Binary Files | 10 |
-| Total Size | 63.53 KB |
 
-### 📄 File Types Distribution
+================================================================================
+BINARY/EXCLUDED FILES (not included in text content)
+================================================================================
+- AI/__pycache__/AIPlayer.cpython-313.pyc
+- AI/__pycache__/AIPlayer.cpython-314.pyc
 
-| Extension | Count |
-|-----------|-------|
-| `.pyc` | 10 |
-| `.py` | 9 |
 
-## 💻 File Code Contents
+================================================================================
+FILE: AI/AIPlayer.py
+================================================================================
 
-## 🚫 Binary/Excluded Files
+FILE INFORMATION:
+----------------------------------------
+Size: 6.13 KB
+Extension: .py
+Language: python
+Location: AI/AIPlayer.py
+Relative Path: AI
+Created: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
+Modified: 2026-01-16 11:03:15 (Asia/Damascus / GMT+03:00)
+MD5: d27df3654c6580d200ae960841c429f6
+SHA256: 0e8469abc640729c6c88a75ab7a8222109d3d7a373c48906a66dd944a999cb6a
+Encoding: ASCII
 
-The following files were not included in the text content:
-
-- `__pycache__/GameController.cpython-313.pyc`
-- `__pycache__/GameController.cpython-314.pyc`
-
-## 🚫 Binary/Excluded Files
-
-The following files were not included in the text content:
-
-- `AI/__pycache__/AIPlayer.cpython-313.pyc`
-- `AI/__pycache__/AIPlayer.cpython-314.pyc`
-
-### <a id="📄-ai-aiplayer-py"></a>📄 `AI/AIPlayer.py`
-
-**File Info:**
-- **Size**: 3.57 KB
-- **Extension**: `.py`
-- **Language**: `python`
-- **Location**: `AI/AIPlayer.py`
-- **Relative Path**: `AI`
-- **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-15 21:55:50 (Asia/Damascus / GMT+03:00)
-- **MD5**: `7f7934cba4fecc1f2ddb79d84d0a4965`
-- **SHA256**: `37540646ddb2e63fb8124167274f806bb66d9731da3b2bec5b3eece19650a857`
-- **Encoding**: ASCII
-
-**File code content:**
-
-```python
+FILE CONTENT:
+----------------------------------------
 from GameEngine.Chance import Chance
 from GameEngine.Player import Player
 from GameEngine.State import State
 import math
+import time
 
 class AIPlayer(Player):
-    def __init__(self, chance_model : Chance  ,max_depth: int=3):
+    def __init__(self, chance_model : Chance  ,max_depth: int=4):
         self.max_depth = max_depth
         self.chance_model= chance_model
         
@@ -132,51 +120,67 @@ class AIPlayer(Player):
         child.turnCount += 1
         return child
     
-    def expectiminimax(self, state: State, depth: int):
+    def expectiminimax(self, state: State, depth: int,alpha : float = -math.inf,beta:float=math.inf):
         if depth == 0 or state.is_end():
-            return self.evaluate(state)
+            return evaluate(state)
         
         expected_value=0.0
         for options,weights in self.chance_model.outcomes():
                 if state.current_player == 1:
-                    v = self.max_node_after_throw(state, options, depth)
+                    v = self.max_node_after_throw(state, options, depth,alpha,beta)
                 else:
-                    v = self.min_node_after_throw(state, options, depth)
+                    v = self.min_node_after_throw(state, options, depth,alpha,beta)
                 expected_value += weights * v
         return expected_value
     
 
     # MAX decision after throw
-    def max_node_after_throw(self, state: State, options: int, depth: int):
+    def max_node_after_throw(self, state: State, options: int, depth: int ,alpha:float,beta:float):
         copy_state=state.copy()
         copy_state.rolled_value=options
         moves = copy_state.legal_moves()
         if not moves:
             child = self.pass_turn(copy_state)
-            return self.expectiminimax(child, depth - 1)
+            return self.expectiminimax(child, depth - 1 ,alpha,beta)
+        def move_sorted(move):
+            temp_child = copy_state.copy()
+            temp_child.move_piece(move)
+            return evaluate(temp_child)
+        moves = sorted(moves,key=move_sorted,reverse=True)
         best_value = -math.inf
         for move in moves:
             child = copy_state.copy()
             child.move_piece(move) 
-            value = self.expectiminimax(child, depth - 1)
+            value = self.expectiminimax(child, depth - 1,alpha,beta)
             best_value = max(best_value, value)
+            alpha = max(alpha,best_value)
+            if alpha >=beta:
+                break
 
         return best_value
 
     # MIN decision after throw
-    def min_node_after_throw(self, state: State, options: int, depth: int):
+    def min_node_after_throw(self, state: State, options: int, depth: int,alpha:float,beta:float):
         copy_state=state.copy()
         copy_state.rolled_value=options
         moves = copy_state.legal_moves()
         if not moves:
             child = self.pass_turn(copy_state)
-            return self.expectiminimax(child, depth - 1)
+            return self.expectiminimax(child, depth - 1,alpha,beta)
+        def moves_sorted(move):
+            temp_child = copy_state.copy()
+            temp_child.move_piece(move)
+            return evaluate(temp_child)
+        moves = sorted(moves,key=moves_sorted)
         best_value = math.inf
         for move in moves:
             child = copy_state.copy()
             child.move_piece(move)
-            value = self.expectiminimax(child, depth - 1)
+            value = self.expectiminimax(child, depth - 1,alpha,beta)
             best_value = min(best_value, value)
+            beta = min(beta,best_value)
+            if alpha>=beta:
+                break
 
         return best_value
 
@@ -186,17 +190,20 @@ class AIPlayer(Player):
         moves = copy_state.legal_moves()
         if not moves:
             return None
-
+        time_limit=5.0
+        start_time = time.time()
         if state.current_player == 1:  
             best_value = -math.inf
             best_move = None
             for move in moves:
                 child = copy_state.copy()
                 child.move_piece(move)
-                v = self.expectiminimax(child, self.max_depth - 1)
+                v = self.expectiminimax(child, self.max_depth - 1, alpha=-math.inf, beta=math.inf)
                 if v > best_value:
                     best_value = v
                     best_move = move
+                if time.time() - start_time > time_limit:
+                    break    
             return best_move
 
         else:  
@@ -205,54 +212,112 @@ class AIPlayer(Player):
             for move in moves:
                 child = copy_state.copy()
                 child.move_piece(move)
-                v = self.expectiminimax(child, self.max_depth - 1)
+                v = self.expectiminimax(child, self.max_depth - 1, alpha=-math.inf, beta=math.inf)
                 if v < best_value:
                     best_value = v
                     best_move = move
+                if time.time()- start_time > time_limit :
+                    break    
             return best_move
 
 
-    def evaluate(self, state: State) -> float:
-        winner = state.winner_player
-        if winner == "white":
-            return 10000
-        if winner == "black":
-            return -10000
-        return 0.0
+
+chance = Chance()
+ROLL_PROBS = chance.possible_rolls() 
+
+
+def effective_pos(pos: int) -> float:
+    if pos == 25:
+        return 25.5
+    if pos == 26:
+        return 14.0
+    if pos == 27:
+        return ROLL_PROBS[3] * 35 + (1 - ROLL_PROBS[3]) * 14
+    if pos == 28:
+        return ROLL_PROBS[2] * 35 + (1 - ROLL_PROBS[2]) * 14
+    if pos == 29:
+        return 35.0
+    return float(pos)
+
+
+def evaluate(state) -> float:
+    
+    own_poss = [i+1 for i in range(30) if state.cells[i].player == 1]
+    opp_poss = [i+1 for i in range(30) if state.cells[i].player == 0]
+    
+    own_progress = sum(effective_pos(p) for p in own_poss) + 35.0 * state.white_pieces
+    opp_progress = sum(effective_pos(p) for p in opp_poss) + 35.0 * state.black_pieces
+    progress_score = own_progress - opp_progress
+
+    ai_threat_opp = 0.0
+    opp_threat_ai = 0.0
+
+    for o in own_poss:
+        for roll in range(1, 6):
+            target = o + roll
+            if target > 29:
+                continue
+            if target in opp_poss:
+                ai_threat_opp += ROLL_PROBS[roll]
+
+    for o in opp_poss:
+        for roll in range(1, 6):
+            target = o + roll
+            if target > 29:
+                continue
+            if target in own_poss:
+                opp_threat_ai += ROLL_PROBS[roll]
+
+    safety_score = 50.0 * ai_threat_opp - 50.0 * opp_threat_ai
+
+    swap_bonus = 0.0
+    if state.last_hit == 1:
+        swap_bonus = 20.0
+    elif state.last_hit == 0:
+        swap_bonus = -20.0
+
+    if state.white_pieces == 7:
+        return 10000.0
+    if state.black_pieces == 7:
+        return -10000.0
+
+    final_value = progress_score + 0.65 * safety_score + swap_bonus
+    return final_value
     
 
-```
+================================================================================
 
----
 
-## 🚫 Binary/Excluded Files
+================================================================================
+BINARY/EXCLUDED FILES (not included in text content)
+================================================================================
+- GameEngine/__pycache__/Chance.cpython-313.pyc
+- GameEngine/__pycache__/Chance.cpython-314.pyc
+- GameEngine/__pycache__/Player.cpython-313.pyc
+- GameEngine/__pycache__/Player.cpython-314.pyc
+- GameEngine/__pycache__/State.cpython-313.pyc
+- GameEngine/__pycache__/State.cpython-314.pyc
 
-The following files were not included in the text content:
 
-- `GameEngine/__pycache__/Chance.cpython-313.pyc`
-- `GameEngine/__pycache__/Chance.cpython-314.pyc`
-- `GameEngine/__pycache__/Player.cpython-313.pyc`
-- `GameEngine/__pycache__/Player.cpython-314.pyc`
-- `GameEngine/__pycache__/State.cpython-313.pyc`
-- `GameEngine/__pycache__/State.cpython-314.pyc`
+================================================================================
+FILE: GameEngine/Chance.py
+================================================================================
 
-### <a id="📄-gameengine-chance-py"></a>📄 `GameEngine/Chance.py`
+FILE INFORMATION:
+----------------------------------------
+Size: 892 B
+Extension: .py
+Language: python
+Location: GameEngine/Chance.py
+Relative Path: GameEngine
+Created: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
+Modified: 2026-01-16 08:10:18 (Asia/Damascus / GMT+03:00)
+MD5: 3324aae8586e05b4db12eed8bd423214
+SHA256: 2ace7a96789ce6106c3a9ca30e002e6b3baf35a729083751d226a5f8fe4e50a2
+Encoding: UTF-8
 
-**File Info:**
-- **Size**: 892 B
-- **Extension**: `.py`
-- **Language**: `python`
-- **Location**: `GameEngine/Chance.py`
-- **Relative Path**: `GameEngine`
-- **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-15 21:53:11 (Asia/Damascus / GMT+03:00)
-- **MD5**: `3324aae8586e05b4db12eed8bd423214`
-- **SHA256**: `2ace7a96789ce6106c3a9ca30e002e6b3baf35a729083751d226a5f8fe4e50a2`
-- **Encoding**: UTF-8
-
-**File code content:**
-
-```python
+FILE CONTENT:
+----------------------------------------
 import numpy as np 
 from typing import List, Tuple
 class Chance:
@@ -279,27 +344,28 @@ class Chance:
     #     #
     #     pass
 
-```
+================================================================================
 
----
 
-### <a id="📄-gameengine-player-py"></a>📄 `GameEngine/Player.py`
+================================================================================
+FILE: GameEngine/Player.py
+================================================================================
 
-**File Info:**
-- **Size**: 482 B
-- **Extension**: `.py`
-- **Language**: `python`
-- **Location**: `GameEngine/Player.py`
-- **Relative Path**: `GameEngine`
-- **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-15 16:25:04 (Asia/Damascus / GMT+03:00)
-- **MD5**: `5d5f96df72c917bb2721aca163e983d6`
-- **SHA256**: `9665601c1f3fde7ff26f677cad7691b868a304fac151b65dcd4afc9df8fca315`
-- **Encoding**: UTF-8
+FILE INFORMATION:
+----------------------------------------
+Size: 482 B
+Extension: .py
+Language: python
+Location: GameEngine/Player.py
+Relative Path: GameEngine
+Created: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
+Modified: 2026-01-15 16:25:04 (Asia/Damascus / GMT+03:00)
+MD5: 5d5f96df72c917bb2721aca163e983d6
+SHA256: 9665601c1f3fde7ff26f677cad7691b868a304fac151b65dcd4afc9df8fca315
+Encoding: UTF-8
 
-**File code content:**
-
-```python
+FILE CONTENT:
+----------------------------------------
 from GameEngine.State import State
 class Player:
     def policy(self, state: State):
@@ -316,27 +382,28 @@ class RandomPlayer(Player):
         """اختيار عشوائي من الحركات القانونية"""
         pass
 
-```
+================================================================================
 
----
 
-### <a id="📄-gameengine-state-py"></a>📄 `GameEngine/State.py`
+================================================================================
+FILE: GameEngine/State.py
+================================================================================
 
-**File Info:**
-- **Size**: 11.39 KB
-- **Extension**: `.py`
-- **Language**: `python`
-- **Location**: `GameEngine/State.py`
-- **Relative Path**: `GameEngine`
-- **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-15 22:00:42 (Asia/Damascus / GMT+03:00)
-- **MD5**: `196f28415e1c3121b9e8008470eeabac`
-- **SHA256**: `2eea8d3cb5642a47543880105e6dc2ed4e7dc2d5a8b20840a657bc7a19582732`
-- **Encoding**: ASCII
+FILE INFORMATION:
+----------------------------------------
+Size: 11.39 KB
+Extension: .py
+Language: python
+Location: GameEngine/State.py
+Relative Path: GameEngine
+Created: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
+Modified: 2026-01-16 11:01:14 (Asia/Damascus / GMT+03:00)
+MD5: c02496371c83b9920e8bb45562051cd4
+SHA256: 2625e780585d9533552c15b8884e24d26232efe805a32f4d866aad26fb55b811
+Encoding: ASCII
 
-**File code content:**
-
-```python
+FILE CONTENT:
+----------------------------------------
 from typing import Optional
 from colorama import Fore, Back, Style
 import copy
@@ -500,7 +567,7 @@ class State:
         # return a list of indices of pieces that can be moved
         #  based on rolled_value and current_player
         legal_moves_list=[]
-        for i in range(25):
+        for i in range(26):
             cell=self.cells[i]
             if cell.player == self.current_player:
                 if self.is_valid_move(i):
@@ -544,7 +611,7 @@ class State:
             for i in range(14,-1,-1):
                 if(self.cells[i].player is None):
                     self.cells[i].player=self.current_player
-                    print(f'{index} rebirthed to {i}')
+                    # print(f'{index} rebirthed to {i}')
                     return
             
     def play(self):
@@ -646,50 +713,51 @@ class State:
             print(Fore.BLUE + "BLUE (AI) WON ")
         else:
             print(Fore.MAGENTA + "MAGENTA (HUMAN) WON ")
+================================================================================
 
-```
 
----
+================================================================================
+FILE: UI/render.py
+================================================================================
 
-### <a id="📄-ui-render-py"></a>📄 `UI/render.py`
+FILE INFORMATION:
+----------------------------------------
+Size: 0 B
+Extension: .py
+Language: python
+Location: UI/render.py
+Relative Path: UI
+Created: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
+Modified: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
+MD5: d41d8cd98f00b204e9800998ecf8427e
+SHA256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+Encoding: ASCII
 
-**File Info:**
-- **Size**: 0 B
-- **Extension**: `.py`
-- **Language**: `python`
-- **Location**: `UI/render.py`
-- **Relative Path**: `UI`
-- **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **MD5**: `d41d8cd98f00b204e9800998ecf8427e`
-- **SHA256**: `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`
-- **Encoding**: ASCII
+FILE CONTENT:
+----------------------------------------
 
-**File code content:**
+================================================================================
 
-```python
 
-```
+================================================================================
+FILE: board.py
+================================================================================
 
----
+FILE INFORMATION:
+----------------------------------------
+Size: 1.05 KB
+Extension: .py
+Language: python
+Location: board.py
+Relative Path: root
+Created: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
+Modified: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
+MD5: b40b2061898460c4db34b47605554a72
+SHA256: e94d3bae92fd68399f6eeee6aba122c5968168d3684646fc0ce87c590a1f4312
+Encoding: ASCII
 
-### <a id="📄-board-py"></a>📄 `board.py`
-
-**File Info:**
-- **Size**: 1.05 KB
-- **Extension**: `.py`
-- **Language**: `python`
-- **Location**: `board.py`
-- **Relative Path**: `root`
-- **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **MD5**: `b40b2061898460c4db34b47605554a72`
-- **SHA256**: `e94d3bae92fd68399f6eeee6aba122c5968168d3684646fc0ce87c590a1f4312`
-- **Encoding**: ASCII
-
-**File code content:**
-
-```python
+FILE CONTENT:
+----------------------------------------
 class board:
     def __init__(self):
         self.cells=self.initialize_board()
@@ -731,27 +799,28 @@ class cell:
     
 
 
-```
+================================================================================
 
----
 
-### <a id="📄-gamecontroller-py"></a>📄 `GameController.py`
+================================================================================
+FILE: GameController.py
+================================================================================
 
-**File Info:**
-- **Size**: 948 B
-- **Extension**: `.py`
-- **Language**: `python`
-- **Location**: `GameController.py`
-- **Relative Path**: `root`
-- **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-15 16:25:04 (Asia/Damascus / GMT+03:00)
-- **MD5**: `c97c8e80c46cc73ea6a31e3160e18cfe`
-- **SHA256**: `9a17f07fbacc45cd9170b1a26a840e4ba051d2593c1ec7d1094916ce9de67aab`
-- **Encoding**: ASCII
+FILE INFORMATION:
+----------------------------------------
+Size: 948 B
+Extension: .py
+Language: python
+Location: GameController.py
+Relative Path: root
+Created: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
+Modified: 2026-01-15 16:25:04 (Asia/Damascus / GMT+03:00)
+MD5: c97c8e80c46cc73ea6a31e3160e18cfe
+SHA256: 9a17f07fbacc45cd9170b1a26a840e4ba051d2593c1ec7d1094916ce9de67aab
+Encoding: ASCII
 
-**File code content:**
-
-```python
+FILE CONTENT:
+----------------------------------------
 """
 Game Controller
 """
@@ -785,27 +854,28 @@ class GameController:
             # 4. Render
             # self.view.render(self.state)
 
-```
+================================================================================
 
----
 
-### <a id="📄-main-py"></a>📄 `main.py`
+================================================================================
+FILE: main.py
+================================================================================
 
-**File Info:**
-- **Size**: 626 B
-- **Extension**: `.py`
-- **Language**: `python`
-- **Location**: `main.py`
-- **Relative Path**: `root`
-- **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-15 21:49:12 (Asia/Damascus / GMT+03:00)
-- **MD5**: `31acb140f6ad2497dd19dfa8d05136cb`
-- **SHA256**: `5ace6e2978fcdd7928d5cfd9c1e09d6e25f4f744e4ff6f27991eb10d0c404803`
-- **Encoding**: ASCII
+FILE INFORMATION:
+----------------------------------------
+Size: 626 B
+Extension: .py
+Language: python
+Location: main.py
+Relative Path: root
+Created: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
+Modified: 2026-01-16 10:09:18 (Asia/Damascus / GMT+03:00)
+MD5: c70f8f58b9cb3009f682b4c605f9863d
+SHA256: 71c9b8f71875896b6891cab70bb7283f8008f9811919824aea7784e1303532df
+Encoding: ASCII
 
-**File code content:**
-
-```python
+FILE CONTENT:
+----------------------------------------
 """
 This is main file where is an entry point to our project
 """
@@ -820,7 +890,7 @@ state = State()
 
 chance = Chance()
 
-player_max = AIPlayer(chance_model=chance,max_depth=3)
+player_max = AIPlayer(chance_model=chance,max_depth=4)
 player_min = HumanPlayer()
 
 # view = GUIView()
@@ -837,27 +907,28 @@ game = GameController(
 # state.play()
 state.play_ai_vs_human(player_max)
 
-```
+================================================================================
 
----
 
-### <a id="📄-state-py"></a>📄 `state.py`
+================================================================================
+FILE: state.py
+================================================================================
 
-**File Info:**
-- **Size**: 1.86 KB
-- **Extension**: `.py`
-- **Language**: `python`
-- **Location**: `state.py`
-- **Relative Path**: `root`
-- **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **MD5**: `e3decceb979a84e34612aae16e2442fd`
-- **SHA256**: `5e8c369d7dfb53dc059a8b319fb84858f0036e3e462a596941ebf33d49f2ac89`
-- **Encoding**: ASCII
+FILE INFORMATION:
+----------------------------------------
+Size: 1.86 KB
+Extension: .py
+Language: python
+Location: state.py
+Relative Path: root
+Created: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
+Modified: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
+MD5: e3decceb979a84e34612aae16e2442fd
+SHA256: 5e8c369d7dfb53dc059a8b319fb84858f0036e3e462a596941ebf33d49f2ac89
+Encoding: ASCII
 
-**File code content:**
-
-```python
+FILE CONTENT:
+----------------------------------------
 from board import cell
 class state:
     def __init__(self):
@@ -921,7 +992,4 @@ class state:
         
 
 
-```
-
----
-
+================================================================================

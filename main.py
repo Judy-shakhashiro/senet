@@ -12,7 +12,7 @@ state = State()
 
 chance = Chance()
 
-player_max = AIPlayer(chance_model=chance,max_depth=3)
+player_max = AIPlayer(chance_model=chance,max_depth=4)
 player_min = HumanPlayer()
 
 # view = GUIView()

@@ -213,7 +213,7 @@ class State:
             for i in range(14,-1,-1):
                 if(self.cells[i].player is None):
                     self.cells[i].player=self.current_player
-                    print(f'{index} rebirthed to {i}')
+                    # print(f'{index} rebirthed to {i}')
                     return
             
     def play(self):
