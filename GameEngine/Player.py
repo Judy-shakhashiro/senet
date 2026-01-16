@@ -1,15 +1,39 @@
+import numpy as np 
 from GameEngine.State import State
+from colorama import Fore
 class Player:
-    def policy(self, state: State):
+    def choose_move(self, state: State , roll: int = None):
         """تحدد الحركة التي سينفذها اللاعب بناءً على حالته"""
         pass
 
 class HumanPlayer(Player):
-    def policy(self, state):
-        """إدخال من المستخدم"""
-        pass
+    def choose_move(self, state: State , roll: int = None ):
+        legal_moves = state.legal_moves()
+        move = int(input(Fore.WHITE + "Enter index to move :"))
+        while move not in legal_moves:
+            move = int(input("Invalid, try again: "))
+        return move
 
 class RandomPlayer(Player):
-    def policy(self, state):
+    def choose_move(self, state: State , roll: int = None):
         """اختيار عشوائي من الحركات القانونية"""
-        pass
+        legal_moves = state.legal_moves()
+
+        if not legal_moves :
+            return None
+        
+        chosen = np.random.choice(legal_moves )
+        return chosen
+
+
+class LastPawnPlayer(Player):
+    
+    def choose_move(self, state: State , roll: int = None):
+        """  اختيار الحجر الأكثر تقدماً  """  
+        legal_moves = state.legal_moves()
+        
+        if not legal_moves:
+            return None
+        
+        chosen = np.max(legal_moves)
+        return chosen
