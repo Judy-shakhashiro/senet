@@ -280,16 +280,18 @@ class State:
             self.winner_player = "white" 
             return 1
         return None  
-    def play(player1,player2):
-        match player1:
-         case 'human'
+    # def play(player1,player2):
+    #     match player1:
+    #      case 'human'
           
 
     def play_ai_vs_human(self, ai_player):
         chance = Chance()
         while not self.is_end():
-                self.human_turn(chance)
-                self.ai_turn(chance, ai_player)
+                if self.current_player == 0:
+                 self.human_turn(chance)
+                else:
+                 self.ai_turn(chance, ai_player)
           
         
 
