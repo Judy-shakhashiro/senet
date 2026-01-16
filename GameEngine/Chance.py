@@ -17,9 +17,4 @@ class Chance:
         rolls = self.possible_rolls()
         return list(rolls.items())
 
-    # def apply_roll(self, state, roll):
-    #     """تطبيق نتيجة الرمية على الحالة → ترجع حالة جديدة"""
-    #     # if state has player in house of horus and roll is not 1 then
-    #     # move it to rebirth
-    #     #
-    #     pass
+   

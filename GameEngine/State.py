@@ -280,45 +280,70 @@ class State:
             self.winner_player = "white" 
             return 1
         return None  
-    
+    def play(player1,player2):
+        match player1:
+         case 'human'
+          
+
     def play_ai_vs_human(self, ai_player):
         chance = Chance()
         while not self.is_end():
-            self.display()
-            self.rolled_value = chance.roll_table()
-            moves = self.legal_moves()
-            if self.current_player == 1:
-                print(Fore.BLUE + f"AI (blue) rolled {self.rolled_value}")
-                print(Fore.BLUE + f"Valid moves: {moves}")
-            else:
-                print(Fore.MAGENTA + f"Human (magenta) rolled {self.rolled_value}")
-                print(Fore.MAGENTA + f"Valid moves: {moves}")
+                self.human_turn(chance)
+                self.ai_turn(chance, ai_player)
+          
         
-            if not moves:
-                print(Fore.YELLOW + "No valid moves → turn skipped")
-                self.current_player ^= 1
-                self.turnCount += 1
-                continue
 
-            if self.current_player == 1:
-                move = ai_player.choose_move(self, self.rolled_value)
-                print(Fore.BLUE + f"AI chooses move: {move}")
-                self.move_piece(move)
-                self.turnCount +=1
-                self.current_player ^= 1
-
-    
-            else:
-                move = int(input(Fore.WHITE + "Enter index to move: "))
-                while move not in moves:
-                    print(Fore.RED + "Invalid move, choose from:", moves)
-                    move = int(input(Fore.WHITE + "Enter index to move: "))
-                self.move_piece(move)
-                self.turnCount +=1
-                self.current_player ^= 1
 
         winner = self.winner_player
         if winner == "white":
             print(Fore.BLUE + "BLUE (AI) WON ")
         else:
             print(Fore.MAGENTA + "MAGENTA (HUMAN) WON ")
+
+
+
+    def human_turn(self,chance):
+            self.display()
+            self.rolled_value = chance.roll_table()
+            moves = self.legal_moves()
+            print(Fore.MAGENTA + f"Human (magenta) rolled {self.rolled_value}")
+            print(Fore.MAGENTA + f"Valid moves: {moves}")
+            if not moves:
+                print(Fore.YELLOW + "No valid moves -> turn skipped")
+                self.current_player ^= 1
+                self.turnCount += 1
+                return
+            move = self.input()
+            while move not in moves:
+             print(Fore.RED + "Invalid move, choose from:", moves)
+            
+            self.move_piece(move)
+            self.turnCount +=1
+            self.current_player ^= 1
+            
+
+
+    def random_turn():
+        pass
+    def last_pawn_turn():
+        pass
+    def ai_turn(self,chance,ai_player):
+        self.display()
+        self.rolled_value = chance.roll_table()
+        moves = self.legal_moves()
+        print(Fore.BLUE + f"AI (blue) rolled {self.rolled_value}")
+        print(Fore.BLUE + f"Valid moves: {moves}")
+        if not moves:
+            print(Fore.YELLOW + "No valid moves -> turn skipped")
+            self.current_player ^= 1
+            self.turnCount += 1
+            return
+        move = ai_player.choose_move(self, self.rolled_value)
+        print(Fore.BLUE + f"AI chooses move: {move}")
+        self.move_piece(move)
+        self.turnCount +=1
+        self.current_player ^= 1
+
+    
+        
+       
