@@ -3,7 +3,7 @@
 ## 📊 Project Information
 
 - **Project Name**: `senet`
-- **Generated On**: 2026-01-16 11:03:16 (Asia/Damascus / GMT+03:00)
+- **Generated On**: 2026-01-16 15:48:49 (Asia/Damascus / GMT+03:00)
 - **Total Files Processed**: 19
 - **Export Tool**: Easy Whole Project to Single Text File for LLMs v1.1.0
 - **Tool Author**: Jota / José Guilherme Pandolfi
@@ -25,25 +25,25 @@
 │   └── 📄 GameController.cpython-314.pyc (1.67 KB)
 ├── 📁 AI/
 │   ├── 📁 __pycache__/
-│   │   ├── 📄 AIPlayer.cpython-313.pyc (8.64 KB)
+│   │   ├── 📄 AIPlayer.cpython-313.pyc (9.82 KB)
 │   │   └── 📄 AIPlayer.cpython-314.pyc (2.32 KB)
-│   └── 📄 AIPlayer.py (6.13 KB)
+│   └── 📄 AIPlayer.py (7.28 KB)
 ├── 📁 GameEngine/
 │   ├── 📁 __pycache__/
 │   │   ├── 📄 Chance.cpython-313.pyc (1.54 KB)
 │   │   ├── 📄 Chance.cpython-314.pyc (1.2 KB)
 │   │   ├── 📄 Player.cpython-313.pyc (1.39 KB)
 │   │   ├── 📄 Player.cpython-314.pyc (1.5 KB)
-│   │   ├── 📄 State.cpython-313.pyc (14.65 KB)
+│   │   ├── 📄 State.cpython-313.pyc (15.12 KB)
 │   │   └── 📄 State.cpython-314.pyc (11.72 KB)
 │   ├── 📄 Chance.py (892 B)
 │   ├── 📄 Player.py (482 B)
-│   └── 📄 State.py (11.39 KB)
+│   └── 📄 State.py (11.69 KB)
 ├── 📁 UI/
 │   └── 📄 render.py
 ├── 📄 board.py (1.05 KB)
 ├── 📄 GameController.py (948 B)
-├── 📄 main.py (626 B)
+├── 📄 main.py (1.02 KB)
 └── 📄 state.py (1.86 KB)
 ```
 
@@ -71,7 +71,7 @@
 | Total Directories | 6 |
 | Text Files | 9 |
 | Binary Files | 10 |
-| Total Size | 69.74 KB |
+| Total Size | 73.24 KB |
 
 ### 📄 File Types Distribution
 
@@ -99,15 +99,15 @@ The following files were not included in the text content:
 ### <a id="📄-ai-aiplayer-py"></a>📄 `AI/AIPlayer.py`
 
 **File Info:**
-- **Size**: 6.13 KB
+- **Size**: 7.28 KB
 - **Extension**: `.py`
 - **Language**: `python`
 - **Location**: `AI/AIPlayer.py`
 - **Relative Path**: `AI`
 - **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-16 11:03:15 (Asia/Damascus / GMT+03:00)
-- **MD5**: `d27df3654c6580d200ae960841c429f6`
-- **SHA256**: `0e8469abc640729c6c88a75ab7a8222109d3d7a373c48906a66dd944a999cb6a`
+- **Modified**: 2026-01-16 15:32:24 (Asia/Damascus / GMT+03:00)
+- **MD5**: `9c30bb61e84febf17600140f65d56811`
+- **SHA256**: `44c2a54d5d73ad97a060ba94d296bd745bbc9602c072a61003d43c9551cec1a2`
 - **Encoding**: ASCII
 
 **File code content:**
@@ -120,9 +120,22 @@ import math
 import time
 
 class AIPlayer(Player):
-    def __init__(self, chance_model : Chance  ,max_depth: int=4):
+    def __init__(self, chance_model : Chance  ,max_depth: int=4,debug:bool=False):
         self.max_depth = max_depth
         self.chance_model= chance_model
+        self.debug=debug
+        self.nodes_expanded=0
+        self.last_choice_value=None
+        self.last_choice_eval=None
+        self.last_choice_nodes=0
+        self.last_choice_time=0.0
+    def reset_states(self):
+        self.nodes_expanded=0
+        self.last_choice_value=None
+        self.last_choice_eval=None
+        self.last_choice_nodes=0
+        self.last_choice_time=0.0
+            
         
     def pass_turn(self, state: State) :
         child = state.copy()
@@ -134,6 +147,7 @@ class AIPlayer(Player):
         return child
     
     def expectiminimax(self, state: State, depth: int,alpha : float = -math.inf,beta:float=math.inf):
+        self.nodes_expanded+=1
         if depth == 0 or state.is_end():
             return evaluate(state)
         
@@ -198,25 +212,37 @@ class AIPlayer(Player):
         return best_value
 
     def choose_move(self, state: State, options: int):
+        self.reset_states()
         copy_state=state.copy()
         copy_state.rolled_value=options
         moves = copy_state.legal_moves()
-        if not moves:
-            return None
         time_limit=5.0
         start_time = time.time()
+        if not moves:
+            self.last_choice_nodes=0
+            self.last_choice_time=time.time() - start_time
+            self.last_choice_value=None
+            return None
+        
         if state.current_player == 1:  
             best_value = -math.inf
             best_move = None
+            best_eval = None
             for move in moves:
                 child = copy_state.copy()
                 child.move_piece(move)
+                evaluate_state=evaluate(child)
                 v = self.expectiminimax(child, self.max_depth - 1, alpha=-math.inf, beta=math.inf)
                 if v > best_value:
                     best_value = v
                     best_move = move
+                    best_eval = evaluate_state 
                 if time.time() - start_time > time_limit:
-                    break    
+                    break   
+            self.last_choice_value=best_value
+            self.last_choice_eval = best_eval
+            self.last_choice_nodes=self.nodes_expanded
+            self.last_choice_time=time.time() - start_time  
             return best_move
 
         else:  
@@ -231,7 +257,11 @@ class AIPlayer(Player):
                     best_move = move
                 if time.time()- start_time > time_limit :
                     break    
-            return best_move
+        self.last_choice_value=best_value
+        self.last_choice_eval = best_eval
+        self.last_choice_nodes=self.nodes_expanded
+        self.last_choice_time=time.time() - start_time        
+        return best_move
 
 
 
@@ -400,15 +430,15 @@ class RandomPlayer(Player):
 ### <a id="📄-gameengine-state-py"></a>📄 `GameEngine/State.py`
 
 **File Info:**
-- **Size**: 11.39 KB
+- **Size**: 11.69 KB
 - **Extension**: `.py`
 - **Language**: `python`
 - **Location**: `GameEngine/State.py`
 - **Relative Path**: `GameEngine`
 - **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-16 11:01:14 (Asia/Damascus / GMT+03:00)
-- **MD5**: `c02496371c83b9920e8bb45562051cd4`
-- **SHA256**: `2625e780585d9533552c15b8884e24d26232efe805a32f4d866aad26fb55b811`
+- **Modified**: 2026-01-16 15:48:48 (Asia/Damascus / GMT+03:00)
+- **MD5**: `01ea6130bcedd32fb543c55e08800ec0`
+- **SHA256**: `4bb8a8f9d71369dab0dc1c3931fda4c347e713e6f07d0631add254b176b9f4bf`
 - **Encoding**: ASCII
 
 **File code content:**
@@ -565,7 +595,7 @@ class State:
                     self.cells[index+self.rolled_value].player=self.current_player
                     self.cells[index].player=None
                     
-                    # print(f'moved to empty cell at index {index+self.rolled_value} of player{self.current_player}')
+        # print(f'moved to empty cell at index {index+self.rolled_value} of player{self.current_player}')
         # in order to return the state after move 
         # just write this state=state.move_piece(toss,state.cells,index)    
         self.turnCount +=1
@@ -685,44 +715,42 @@ class State:
             self.winner_player = "white" 
             return 1
         return None  
-    
-    def play_ai_vs_human(self, ai_player):
-        chance = Chance()
+    def play_ai_vs_human(self,ai_player,chance,debug:bool=False):
         while not self.is_end():
             self.display()
-            self.rolled_value = chance.roll_table()
+            self.rolled_value=chance.roll_table()
             moves = self.legal_moves()
-            if self.current_player == 1:
-                print(Fore.BLUE + f"AI (blue) rolled {self.rolled_value}")
-                print(Fore.BLUE + f"Valid moves: {moves}")
+            if self.current_player ==1:
+                print(Fore.BLUE + f"AI (blue) rolled {self.rolled_value}") 
+                print(Fore.BLUE + f"Valid moves:{moves}") 
             else:
                 print(Fore.MAGENTA + f"Human (magenta) rolled {self.rolled_value}")
-                print(Fore.MAGENTA + f"Valid moves: {moves}")
-        
+                print(Fore.MAGENTA + f"Valid moves : {moves}")
             if not moves:
-                print(Fore.YELLOW + "No valid moves → turn skipped")
-                self.current_player ^= 1
-                self.turnCount += 1
+                print(Fore.YELLOW + "No valid moves == turn skipped")   
+                self.current_player ^=1 
+                self.turnCount +=1
                 continue
-
             if self.current_player == 1:
-                move = ai_player.choose_move(self, self.rolled_value)
-                print(Fore.BLUE + f"AI chooses move: {move}")
+                move = ai_player.choose_move(self,self.rolled_value)
+                print(Fore.BLUE + f"AI choose move:{move}")
+                if debug:
+                        v = ai_player.last_choice_value
+                        n = ai_player.last_choice_nodes
+                        t = ai_player.last_choice_time
+                        ev = ai_player.last_choice_eval
+                        print(Fore.CYAN + f"[DEBUG] val={v}    eval={ev:}  nodes={n}  time={t:}s")
                 self.move_piece(move)
-
-    
             else:
-                move = int(input(Fore.WHITE + "Enter index to move: "))
+                move = int(input(Fore.WHITE + "Enter index to move :"))
                 while move not in moves:
-                    print(Fore.RED + "Invalid move, choose from:", moves)
-                    move = int(input(Fore.WHITE + "Enter index to move: "))
-                self.move_piece(move)
-
-        winner = self.winner_player
-        if winner == "white":
-            print(Fore.BLUE + "BLUE (AI) WON ")
+                    print(Fore.RED + f"Invalid move, choose from: {moves}")  
+                    move = int(input(Fore.WHITE + "Enter index to move: "))  
+                self.move_piece(move)    
+        if self.winner_player == "white":
+            print(Fore.BLUE + "BLUE (AI) WON")
         else:
-            print(Fore.MAGENTA + "MAGENTA (HUMAN) WON ")
+            print(Fore.MAGENTA + "MAGENTA (HUMAN) WON")             
 ```
 
 ---
@@ -868,15 +896,15 @@ class GameController:
 ### <a id="📄-main-py"></a>📄 `main.py`
 
 **File Info:**
-- **Size**: 626 B
+- **Size**: 1.02 KB
 - **Extension**: `.py`
 - **Language**: `python`
 - **Location**: `main.py`
 - **Relative Path**: `root`
 - **Created**: 2026-01-15 09:27:03 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-16 10:09:18 (Asia/Damascus / GMT+03:00)
-- **MD5**: `c70f8f58b9cb3009f682b4c605f9863d`
-- **SHA256**: `71c9b8f71875896b6891cab70bb7283f8008f9811919824aea7784e1303532df`
+- **Modified**: 2026-01-16 15:33:36 (Asia/Damascus / GMT+03:00)
+- **MD5**: `13324ba5af08405646addbbd7f9d82a7`
+- **SHA256**: `c2d6c14928e622cf4e7067fec65c889a6f2154c133e9ea56d66c138bb8dab00a`
 - **Encoding**: ASCII
 
 **File code content:**
@@ -886,32 +914,36 @@ class GameController:
 This is main file where is an entry point to our project
 """
 from GameEngine.State import State
-
 from GameEngine.Chance import Chance
 from GameEngine.Player import HumanPlayer
 from AI.AIPlayer import AIPlayer
 from GameController import GameController
+from colorama import Fore, Back, Style
+def main():
+    state = State()
+    chance = Chance()
+    depth = int(input(Fore.WHITE + "Enter deptth you wanna to play with:"))
+    debug = input("Show AI debug info? (y/n): ").strip().lower() == "y"
+    ai_player = AIPlayer(chance_model=chance,max_depth = depth,debug=debug)
+    state.play_ai_vs_human(ai_player,chance,debug=debug)
+    # player_max = AIPlayer(chance_model=chance,max_depth=4)
+    # player_min = HumanPlayer()
 
-state = State()
+    # view = GUIView()
 
-chance = Chance()
+    # game = GameController(
+    #     state=state,
+    #     chance=chance,
+    #     player_max=player_max,
+    #     player_min=player_min,
+    #     # view=view
+    # )
 
-player_max = AIPlayer(chance_model=chance,max_depth=4)
-player_min = HumanPlayer()
-
-# view = GUIView()
-
-game = GameController(
-    state=state,
-    chance=chance,
-    player_max=player_max,
-    player_min=player_min,
-    # view=view
-)
-
-# game.game_loop()
-# state.play()
-state.play_ai_vs_human(player_max)
+    # game.game_loop()
+    # state.play()
+    
+if __name__ == "__main__":
+    main()    
 
 ```
 

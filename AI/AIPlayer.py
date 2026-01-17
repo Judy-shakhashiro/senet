@@ -5,9 +5,22 @@ import math
 import time
 
 class AIPlayer(Player):
-    def __init__(self, chance_model : Chance  ,max_depth: int=4):
+    def __init__(self, chance_model : Chance  ,max_depth: int=4,debug:bool=False):
         self.max_depth = max_depth
         self.chance_model= chance_model
+        self.debug=debug
+        self.nodes_expanded=0
+        self.last_choice_value=None
+        self.last_choice_eval=None
+        self.last_choice_nodes=0
+        self.last_choice_time=0.0
+    def reset_states(self):
+        self.nodes_expanded=0
+        self.last_choice_value=None
+        self.last_choice_eval=None
+        self.last_choice_nodes=0
+        self.last_choice_time=0.0
+            
         
     def pass_turn(self, state: State) :
         child = state.copy()
@@ -19,6 +32,7 @@ class AIPlayer(Player):
         return child
     
     def expectiminimax(self, state: State, depth: int,alpha : float = -math.inf,beta:float=math.inf):
+        self.nodes_expanded+=1
         if depth == 0 or state.is_end():
             return evaluate(state)
         
@@ -83,25 +97,37 @@ class AIPlayer(Player):
         return best_value
 
     def choose_move(self, state: State, options: int):
+        self.reset_states()
         copy_state=state.copy()
         copy_state.rolled_value=options
         moves = copy_state.legal_moves()
-        if not moves:
-            return None
         time_limit=5.0
         start_time = time.time()
+        if not moves:
+            self.last_choice_nodes=0
+            self.last_choice_time=time.time() - start_time
+            self.last_choice_value=None
+            return None
+        
         if state.current_player == 1:  
             best_value = -math.inf
             best_move = None
+            best_eval = None
             for move in moves:
                 child = copy_state.copy()
                 child.move_piece(move)
+                evaluate_state=evaluate(child)
                 v = self.expectiminimax(child, self.max_depth - 1, alpha=-math.inf, beta=math.inf)
                 if v > best_value:
                     best_value = v
                     best_move = move
+                    best_eval = evaluate_state 
                 if time.time() - start_time > time_limit:
-                    break    
+                    break   
+            self.last_choice_value=best_value
+            self.last_choice_eval = best_eval
+            self.last_choice_nodes=self.nodes_expanded
+            self.last_choice_time=time.time() - start_time  
             return best_move
 
         else:  
@@ -116,7 +142,11 @@ class AIPlayer(Player):
                     best_move = move
                 if time.time()- start_time > time_limit :
                     break    
-            return best_move
+        self.last_choice_value=best_value
+        self.last_choice_eval = best_eval
+        self.last_choice_nodes=self.nodes_expanded
+        self.last_choice_time=time.time() - start_time        
+        return best_move
 
 
 

@@ -285,13 +285,13 @@ class State:
     #      case 'human'
           
 
-    def play_ai_vs_human(self, ai_player):
+    def play_ai_vs_human(self, ai_player,debug: Optional[bool] = False):
         chance = Chance()
         while not self.is_end():
                 if self.current_player == 0:
                  self.human_turn(chance)
                 else:
-                 self.ai_turn(chance, ai_player)
+                 self.ai_turn(chance, ai_player, debug)
           
         
 
@@ -329,7 +329,7 @@ class State:
         pass
     def last_pawn_turn():
         pass
-    def ai_turn(self,chance,ai_player):
+    def ai_turn(self,chance,ai_player,debug: Optional[bool] = False):
         self.display()
         self.rolled_value = chance.roll_table()
         moves = self.legal_moves()
@@ -342,6 +342,12 @@ class State:
             return
         move = ai_player.choose_move(self, self.rolled_value)
         print(Fore.BLUE + f"AI chooses move: {move}")
+        if debug:
+         v = ai_player.last_choice_value
+         n = ai_player.last_choice_nodes
+         t = ai_player.last_choice_time
+         ev = ai_player.last_choice_eval
+         print(Fore.CYAN + f"[DEBUG] val={v}    eval={ev:}  nodes={n}  time={t:}s")
         self.move_piece(move)
         self.turnCount +=1
         self.current_player ^= 1
