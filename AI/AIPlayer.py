@@ -183,7 +183,7 @@ def evaluate(state: State)  :
 
         elif cell.player == 0:  
             if i <= 29:
-                progress_value = (i / 30.0)  
+                progress_value = (i / 30.0)  **2
                 score -= position_weight * progress_value
                 if i >= 20:
                     score -= position_weight * 1.5
