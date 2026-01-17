@@ -5,7 +5,7 @@ import math
 import time
 
 class AIPlayer(Player):
-    def init(self, chance_model : Chance  ,max_depth: int=4,debug:bool=False):
+    def __init__(self, chance_model : Chance  ,max_depth: int=4,debug:bool=False):
         self.max_depth = max_depth
         self.chance_model= chance_model
         self.debug=debug
@@ -174,7 +174,7 @@ def evaluate(state: State)  :
     for i, cell in enumerate(state.cells):
         if cell.player == 1:  
             if i <= 29:
-                progress_value = (i / 30.0)  
+                progress_value = (i / 30.0)  **2
                 score += position_weight * progress_value
                 if i >= 20:
                     score += position_weight * 1.5
@@ -225,7 +225,7 @@ def evaluate(state: State)  :
     
     
 
-    # #evaluate swap(actual)
+    #evaluate swap(actual)
     swap_bonus = 0.0
     if state.last_hit == 1:
         swap_bonus = 20.0
