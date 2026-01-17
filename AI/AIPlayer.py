@@ -5,7 +5,7 @@ import math
 import time
 
 class AIPlayer(Player):
-    def __init__(self, chance_model : Chance  ,max_depth: int=4,debug:bool=False):
+    def init(self, chance_model : Chance  ,max_depth: int=4,debug:bool=False):
         self.max_depth = max_depth
         self.chance_model= chance_model
         self.debug=debug
@@ -95,7 +95,6 @@ class AIPlayer(Player):
                 break
 
         return best_value
-
     def choose_move(self, state: State, options: int):
         self.reset_states()
         copy_state=state.copy()
@@ -150,65 +149,104 @@ class AIPlayer(Player):
 
 
 
-chance = Chance()
-ROLL_PROBS = chance.possible_rolls() 
-
-
-def effective_pos(pos: int) -> float:
-    if pos == 25:
-        return 25.5
-    if pos == 26:
-        return 14.0
-    if pos == 27:
-        return ROLL_PROBS[3] * 35 + (1 - ROLL_PROBS[3]) * 14
-    if pos == 28:
-        return ROLL_PROBS[2] * 35 + (1 - ROLL_PROBS[2]) * 14
-    if pos == 29:
-        return 35.0
-    return float(pos)
-
-
-def evaluate(state) -> float:
+def evaluate(state: State)  :
     
-    own_poss = [i+1 for i in range(30) if state.cells[i].player == 1]
-    opp_poss = [i+1 for i in range(30) if state.cells[i].player == 0]
+#check win (must the 7 blocks out)
+    if state.is_end():
+        winner = state.winner()
+        if winner == 1:  
+            return 10000.0
+        elif winner == 0:  
+            return -10000.0
+
+    position_weight = 2.0
+    out_weight = 15.0
+    special_hous_weight = 3.0
+    swap_weight = 4.0
+
+    score = 0.0
+
+  
+    score += out_weight * state.white_pieces
+    score -= out_weight * state.black_pieces
+
+    #evaluate the progress of blocks 
+    for i, cell in enumerate(state.cells):
+        if cell.player == 1:  
+            if i <= 29:
+                progress_value = (i / 30.0)  
+                score += position_weight * progress_value
+                if i >= 20:
+                    score += position_weight * 1.5
+                elif i >= 10:
+                    score += position_weight * 1.0
+
+        elif cell.player == 0:  
+            if i <= 29:
+                progress_value = (i / 30.0)  
+                score -= position_weight * progress_value
+                if i >= 20:
+                    score -= position_weight * 1.5
+                elif i >= 15:
+                    score -= position_weight * 1.0
+
+    # evaluate special houses
+    if state.cells[25].player == 1:
+        score += special_hous_weight * 2.0
+    elif state.cells[25].player == 0:
+        score -= special_hous_weight * 2.0
+
+    if state.cells[26].player == 1:
+        score -= special_hous_weight * 1.5
+    elif state.cells[26].player == 0:
+        score += special_hous_weight * 1.5
+
+    if state.cells[27].player == 1:
+        score += special_hous_weight * 0.5
+    elif state.cells[27].player == 0:
+        score -= special_hous_weight * 0.5
+
+    if state.cells[28].player == 1:
+        score += special_hous_weight * 0.7
+    elif state.cells[28].player == 0:
+        score -= special_hous_weight * 0.7
+
+    if state.cells[29].player == 1:
+        score += special_hous_weight * 1.5
+    elif state.cells[29].player == 0:
+        score -= special_hous_weight * 1.5
+    #evaluate swap(probablity)
+    ai_threat_opp = count_swap_opport(state, 1)
+    score += swap_weight * ai_threat_opp
+
+    opp_threat_ai = count_swap_opport(state, 0)
+    score -= swap_weight * opp_threat_ai
+
     
-    own_progress = sum(effective_pos(p) for p in own_poss) + 35.0 * state.white_pieces
-    opp_progress = sum(effective_pos(p) for p in opp_poss) + 35.0 * state.black_pieces
-    progress_score = own_progress - opp_progress
+    
 
-    ai_threat_opp = 0.0
-    opp_threat_ai = 0.0
-
-    for o in own_poss:
-        for roll in range(1, 6):
-            target = o + roll
-            if target > 29:
-                continue
-            if target in opp_poss:
-                ai_threat_opp += ROLL_PROBS[roll]
-
-    for o in opp_poss:
-        for roll in range(1, 6):
-            target = o + roll
-            if target > 29:
-                continue
-            if target in own_poss:
-                opp_threat_ai += ROLL_PROBS[roll]
-
-    safety_score = 50.0 * ai_threat_opp - 50.0 * opp_threat_ai
-
+    # #evaluate swap(actual)
     swap_bonus = 0.0
     if state.last_hit == 1:
         swap_bonus = 20.0
     elif state.last_hit == 0:
         swap_bonus = -20.0
-
-    if state.white_pieces == 7:
-        return 10000.0
-    if state.black_pieces == 7:
-        return -10000.0
-
-    final_value = progress_score + 0.65 * safety_score + swap_bonus
-    return final_value
     
+    score += swap_bonus
+
+
+    return float(score)
+
+
+# number of available swap opportunities
+def count_swap_opport(state: State, player: int) -> int:
+    count_opport = 0
+    opponent = 1 - player
+    for i in range(30):
+        if state.cells[i].player == player:
+            for j in range(30):
+                if state.cells[j].player == opponent:
+                    diff = j-i
+                    if 1 <= diff <= 5:
+                        count_opport += 1
+    return int(count_opport)
