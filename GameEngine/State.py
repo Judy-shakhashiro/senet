@@ -108,7 +108,7 @@ class State:
                 self.to_rebirth(27)
             # self.turnCount +=1
             # self.current_player ^=1
-              
+        
                 
         # else if toss is 2 and cells[index].type is house of re-atoum then promote()
         if self.cells[28].player ==self.current_player:
@@ -283,19 +283,15 @@ class State:
     # def play(player1,player2):
     #     match player1:
     #      case 'human'
-          
+
 
     def play_ai_vs_human(self, ai_player,debug: Optional[bool] = False):
         chance = Chance()
         while not self.is_end():
                 if self.current_player == 0:
-                 self.human_turn(chance)
+                    self.human_turn(chance)
                 else:
-                 self.ai_turn(chance, ai_player, debug)
-          
-        
-
-
+                    self.ai_turn(chance, ai_player, debug)
         winner = self.winner_player
         if winner == "white":
             print(Fore.BLUE + "BLUE (AI) WON ")
@@ -317,8 +313,8 @@ class State:
                 return
             move = self.input()
             while move not in moves:
-             print(Fore.RED + "Invalid move, choose from:", moves)
-            
+                    print(Fore.RED + "Invalid move, choose from:", moves)
+                    move = int(input(Fore.WHITE + "Enter index to move: "))    
             self.move_piece(move)
             self.turnCount +=1
             self.current_player ^= 1
@@ -343,15 +339,14 @@ class State:
         move = ai_player.choose_move(self, self.rolled_value)
         print(Fore.BLUE + f"AI chooses move: {move}")
         if debug:
-         v = ai_player.last_choice_value
-         n = ai_player.last_choice_nodes
-         t = ai_player.last_choice_time
-         ev = ai_player.last_choice_eval
-         print(Fore.CYAN + f"[DEBUG] val={v}    eval={ev:}  nodes={n}  time={t:}s")
+            v = ai_player.last_choice_value
+            n = ai_player.last_choice_nodes
+            t = ai_player.last_choice_time
+            ev = ai_player.last_choice_eval
+            print(Fore.CYAN + f"[DEBUG] val={v}    eval={ev:}  nodes={n}  time={t:}s")
         self.move_piece(move)
         self.turnCount +=1
         self.current_player ^= 1
 
     
         
-       

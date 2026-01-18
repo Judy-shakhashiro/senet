@@ -14,6 +14,7 @@ class AIPlayer(Player):
         self.last_choice_eval=None
         self.last_choice_nodes=0
         self.last_choice_time=0.0
+        
     def reset_states(self):
         self.nodes_expanded=0
         self.last_choice_value=None
@@ -45,62 +46,73 @@ class AIPlayer(Player):
                 expected_value += weights * v
         return expected_value
     
-
-    # MAX decision after throw
-    def max_node_after_throw(self, state: State, options: int, depth: int ,alpha:float,beta:float):
+    def max_node_after_throw(self, state: State, options: int, depth: int ,alpha:float,beta:float, return_tuple: bool = False):
         copy_state=state.copy()
         copy_state.rolled_value=options
         moves = copy_state.legal_moves()
         if not moves:
             child = self.pass_turn(copy_state)
             return self.expectiminimax(child, depth - 1 ,alpha,beta)
-        def move_sorted(move):
-            temp_child = copy_state.copy()
-            temp_child.move_piece(move)
-            return evaluate(temp_child)
-        moves = sorted(moves,key=move_sorted,reverse=True)
+        # def move_sorted(move):
+        #     temp_child = copy_state.copy()
+        #     temp_child.move_piece(move)
+        #     return evaluate(temp_child)
+        # moves = sorted(moves,key=move_sorted,reverse=True)
         best_value = -math.inf
+        best_move = None
+        best_eval = None
         for move in moves:
             child = copy_state.copy()
             child.move_piece(move) 
+            evaluate_state = evaluate(child)
             value = self.expectiminimax(child, depth - 1,alpha,beta)
-            best_value = max(best_value, value)
-            alpha = max(alpha,best_value)
-            if alpha >=beta:
-                break
-
+            if value > best_value:
+                best_value = value
+                best_move = move
+                best_eval = evaluate_state
+            # alpha = max(alpha,best_value)
+            # if alpha >=beta:
+            #     break
+        if return_tuple:
+            return best_value, best_move, best_eval
         return best_value
 
-    # MIN decision after throw
-    def min_node_after_throw(self, state: State, options: int, depth: int,alpha:float,beta:float):
+    def min_node_after_throw(self, state: State, options: int, depth: int,alpha:float,beta:float, return_tuple: bool = False):
         copy_state=state.copy()
         copy_state.rolled_value=options
         moves = copy_state.legal_moves()
         if not moves:
             child = self.pass_turn(copy_state)
             return self.expectiminimax(child, depth - 1,alpha,beta)
-        def moves_sorted(move):
-            temp_child = copy_state.copy()
-            temp_child.move_piece(move)
-            return evaluate(temp_child)
-        moves = sorted(moves,key=moves_sorted)
+        # def move_sorted(move):
+        #     temp_child = copy_state.copy()
+        #     temp_child.move_piece(move)
+        #     return evaluate(temp_child)
+        # moves = sorted(moves,key=move_sorted)
         best_value = math.inf
+        best_move = None
+        best_eval = None
         for move in moves:
             child = copy_state.copy()
             child.move_piece(move)
+            evaluate_state = evaluate(child)
             value = self.expectiminimax(child, depth - 1,alpha,beta)
-            best_value = min(best_value, value)
-            beta = min(beta,best_value)
-            if alpha>=beta:
-                break
-
+            if value < best_value:
+                best_value = value
+                best_move = move
+                best_eval = evaluate_state
+            # beta = min(beta,best_value)
+            # if alpha>=beta:
+            #     break
+        if return_tuple:
+            return best_value, best_move, best_eval
         return best_value
+
     def choose_move(self, state: State, options: int):
         self.reset_states()
         copy_state=state.copy()
         copy_state.rolled_value=options
         moves = copy_state.legal_moves()
-        time_limit=5.0
         start_time = time.time()
         if not moves:
             self.last_choice_nodes=0
@@ -109,20 +121,7 @@ class AIPlayer(Player):
             return None
         
         if state.current_player == 1:  
-            best_value = -math.inf
-            best_move = None
-            best_eval = None
-            for move in moves:
-                child = copy_state.copy()
-                child.move_piece(move)
-                evaluate_state=evaluate(child)
-                v = self.expectiminimax(child, self.max_depth - 1, alpha=-math.inf, beta=math.inf)
-                if v > best_value:
-                    best_value = v
-                    best_move = move
-                    best_eval = evaluate_state 
-                if time.time() - start_time > time_limit:
-                    break   
+            best_value, best_move, best_eval = self.max_node_after_throw(copy_state, copy_state.rolled_value, self.max_depth, -math.inf, math.inf, return_tuple=True) 
             self.last_choice_value=best_value
             self.last_choice_eval = best_eval
             self.last_choice_nodes=self.nodes_expanded
@@ -130,22 +129,12 @@ class AIPlayer(Player):
             return best_move
 
         else:  
-            best_value = math.inf
-            best_move = None
-            for move in moves:
-                child = copy_state.copy()
-                child.move_piece(move)
-                v = self.expectiminimax(child, self.max_depth - 1, alpha=-math.inf, beta=math.inf)
-                if v < best_value:
-                    best_value = v
-                    best_move = move
-                if time.time()- start_time > time_limit :
-                    break    
-        self.last_choice_value=best_value
-        self.last_choice_eval = best_eval
-        self.last_choice_nodes=self.nodes_expanded
-        self.last_choice_time=time.time() - start_time        
-        return best_move
+            best_value, best_move, best_eval = self.min_node_after_throw(copy_state, copy_state.rolled_value, self.max_depth, -math.inf, math.inf, return_tuple=True) 
+            self.last_choice_value=best_value
+            self.last_choice_eval = best_eval
+            self.last_choice_nodes=self.nodes_expanded
+            self.last_choice_time=time.time() - start_time        
+            return best_move
 
 
 
@@ -159,14 +148,13 @@ def evaluate(state: State)  :
         elif winner == 0:  
             return -10000.0
 
-    position_weight = 2.0
-    out_weight = 15.0
-    special_hous_weight = 3.0
-    swap_weight = 4.0
+    position_weight = 2.0 # وزن موقع الحجر
+    out_weight = 15.0 # وزن نعطيه للحجر الذي خرج
+    special_hous_weight = 3.0 #وزن نضربه بالحجر بالمواقع الخاصة
+    swap_weight = 4.0 # وزن تبديل الحجرين
 
     score = 0.0
 
-  
     score += out_weight * state.white_pieces
     score -= out_weight * state.black_pieces
 
@@ -221,9 +209,6 @@ def evaluate(state: State)  :
 
     opp_threat_ai = count_swap_opport(state, 0)
     score -= swap_weight * opp_threat_ai
-
-    
-    
 
     #evaluate swap(actual)
     swap_bonus = 0.0
