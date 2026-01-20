@@ -53,26 +53,28 @@ class AIPlayer(Player):
         if not moves:
             child = self.pass_turn(copy_state)
             return self.expectiminimax(child, depth - 1 ,alpha,beta)
-        # def move_sorted(move):
-        #     temp_child = copy_state.copy()
-        #     temp_child.move_piece(move)
-        #     return evaluate(temp_child)
-        # moves = sorted(moves,key=move_sorted,reverse=True)
+        def move_sorted(move):
+            temp_child = copy_state.copy()
+            temp_child.move_piece(move)
+            return evaluate(temp_child)
+        moves = sorted(moves,key=move_sorted,reverse=True)
         best_value = -math.inf
         best_move = None
         best_eval = None
         for move in moves:
             child = copy_state.copy()
             child.move_piece(move) 
+            child.current_player = 1 - child.current_player
+            child.turnCount +=1
             evaluate_state = evaluate(child)
             value = self.expectiminimax(child, depth - 1,alpha,beta)
             if value > best_value:
                 best_value = value
                 best_move = move
                 best_eval = evaluate_state
-            # alpha = max(alpha,best_value)
-            # if alpha >=beta:
-            #     break
+            alpha = max(alpha,best_value)
+            if alpha >=beta:
+                break
         if return_tuple:
             return best_value, best_move, best_eval
         return best_value
@@ -84,26 +86,28 @@ class AIPlayer(Player):
         if not moves:
             child = self.pass_turn(copy_state)
             return self.expectiminimax(child, depth - 1,alpha,beta)
-        # def move_sorted(move):
-        #     temp_child = copy_state.copy()
-        #     temp_child.move_piece(move)
-        #     return evaluate(temp_child)
-        # moves = sorted(moves,key=move_sorted)
+        def move_sorted(move):
+            temp_child = copy_state.copy()
+            temp_child.move_piece(move)
+            return evaluate(temp_child)
+        moves = sorted(moves,key=move_sorted)
         best_value = math.inf
         best_move = None
         best_eval = None
         for move in moves:
             child = copy_state.copy()
             child.move_piece(move)
+            child.current_player = 1 - child.current_player
+            child.turnCount +=1
             evaluate_state = evaluate(child)
             value = self.expectiminimax(child, depth - 1,alpha,beta)
             if value < best_value:
                 best_value = value
                 best_move = move
                 best_eval = evaluate_state
-            # beta = min(beta,best_value)
-            # if alpha>=beta:
-            #     break
+            beta = min(beta,best_value)
+            if alpha>=beta:
+                break
         if return_tuple:
             return best_value, best_move, best_eval
         return best_value
@@ -218,8 +222,6 @@ def evaluate(state: State)  :
         swap_bonus = -20.0
     
     score += swap_bonus
-
-
     return float(score)
 
 

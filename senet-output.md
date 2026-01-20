@@ -3,7 +3,7 @@
 ## 📊 Project Information
 
 - **Project Name**: `senet`
-- **Generated On**: 2026-01-18 14:54:40 (Asia/Damascus / GMT+03:00)
+- **Generated On**: 2026-01-20 13:24:56 (Asia/Damascus / GMT+03:00)
 - **Total Files Processed**: 17
 - **Export Tool**: Easy Whole Project to Single Text File for LLMs v1.1.0
 - **Tool Author**: Jota / José Guilherme Pandolfi
@@ -25,9 +25,9 @@
 │   └── 📄 GameController.cpython-314.pyc (1.67 KB)
 ├── 📁 AI/
 │   ├── 📁 __pycache__/
-│   │   ├── 📄 AIPlayer.cpython-313.pyc (10.1 KB)
+│   │   ├── 📄 AIPlayer.cpython-313.pyc (9.5 KB)
 │   │   └── 📄 AIPlayer.cpython-314.pyc (12.19 KB)
-│   └── 📄 AIPlayer.py (8.46 KB)
+│   └── 📄 AIPlayer.py (8.61 KB)
 ├── 📁 GameEngine/
 │   ├── 📁 __pycache__/
 │   │   ├── 📄 Chance.cpython-313.pyc (1.46 KB)
@@ -40,7 +40,7 @@
 │   ├── 📄 Player.py (482 B)
 │   └── 📄 State.py (12.4 KB)
 ├── 📄 board.py (1.05 KB)
-├── 📄 main.py (996 B)
+├── 📄 main.py (1.39 KB)
 └── 📄 state.py (1.86 KB)
 ```
 
@@ -66,7 +66,7 @@
 | Total Directories | 5 |
 | Text Files | 7 |
 | Binary Files | 10 |
-| Total Size | 89.31 KB |
+| Total Size | 89.28 KB |
 
 ### 📄 File Types Distribution
 
@@ -94,15 +94,15 @@ The following files were not included in the text content:
 ### <a id="📄-ai-aiplayer-py"></a>📄 `AI/AIPlayer.py`
 
 **File Info:**
-- **Size**: 8.46 KB
+- **Size**: 8.61 KB
 - **Extension**: `.py`
 - **Language**: `python`
 - **Location**: `AI/AIPlayer.py`
 - **Relative Path**: `AI`
 - **Created**: 2026-01-17 20:11:16 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-18 14:54:39 (Asia/Damascus / GMT+03:00)
-- **MD5**: `9690b400228127afee75555c6bbbfded`
-- **SHA256**: `440ab9da9d204fba32e7e1f26476a5c38e73c296d34f8b295c2e846adcfa3418`
+- **Modified**: 2026-01-20 13:24:56 (Asia/Damascus / GMT+03:00)
+- **MD5**: `732145ac41d108d3eae0ae6ea836c555`
+- **SHA256**: `ee7136b7e6314eef73c7f00679568f4ba3e9a85c0dc987bf0c2d45a106c616ce`
 - **Encoding**: ASCII
 
 **File code content:**
@@ -163,26 +163,28 @@ class AIPlayer(Player):
         if not moves:
             child = self.pass_turn(copy_state)
             return self.expectiminimax(child, depth - 1 ,alpha,beta)
-        # def move_sorted(move):
-        #     temp_child = copy_state.copy()
-        #     temp_child.move_piece(move)
-        #     return evaluate(temp_child)
-        # moves = sorted(moves,key=move_sorted,reverse=True)
+        def move_sorted(move):
+            temp_child = copy_state.copy()
+            temp_child.move_piece(move)
+            return evaluate(temp_child)
+        moves = sorted(moves,key=move_sorted,reverse=True)
         best_value = -math.inf
         best_move = None
         best_eval = None
         for move in moves:
             child = copy_state.copy()
             child.move_piece(move) 
+            child.current_player = 1 - child.current_player
+            child.turnCount +=1
             evaluate_state = evaluate(child)
             value = self.expectiminimax(child, depth - 1,alpha,beta)
             if value > best_value:
                 best_value = value
                 best_move = move
                 best_eval = evaluate_state
-            # alpha = max(alpha,best_value)
-            # if alpha >=beta:
-            #     break
+            alpha = max(alpha,best_value)
+            if alpha >=beta:
+                break
         if return_tuple:
             return best_value, best_move, best_eval
         return best_value
@@ -194,26 +196,28 @@ class AIPlayer(Player):
         if not moves:
             child = self.pass_turn(copy_state)
             return self.expectiminimax(child, depth - 1,alpha,beta)
-        # def move_sorted(move):
-        #     temp_child = copy_state.copy()
-        #     temp_child.move_piece(move)
-        #     return evaluate(temp_child)
-        # moves = sorted(moves,key=move_sorted)
+        def move_sorted(move):
+            temp_child = copy_state.copy()
+            temp_child.move_piece(move)
+            return evaluate(temp_child)
+        moves = sorted(moves,key=move_sorted)
         best_value = math.inf
         best_move = None
         best_eval = None
         for move in moves:
             child = copy_state.copy()
             child.move_piece(move)
+            child.current_player = 1 - child.current_player
+            child.turnCount +=1
             evaluate_state = evaluate(child)
             value = self.expectiminimax(child, depth - 1,alpha,beta)
             if value < best_value:
                 best_value = value
                 best_move = move
                 best_eval = evaluate_state
-            # beta = min(beta,best_value)
-            # if alpha>=beta:
-            #     break
+            beta = min(beta,best_value)
+            if alpha>=beta:
+                break
         if return_tuple:
             return best_value, best_move, best_eval
         return best_value
@@ -328,8 +332,6 @@ def evaluate(state: State)  :
         swap_bonus = -20.0
     
     score += swap_bonus
-
-
     return float(score)
 
 
@@ -879,15 +881,15 @@ class cell:
 ### <a id="📄-main-py"></a>📄 `main.py`
 
 **File Info:**
-- **Size**: 996 B
+- **Size**: 1.39 KB
 - **Extension**: `.py`
 - **Language**: `python`
 - **Location**: `main.py`
 - **Relative Path**: `root`
 - **Created**: 2026-01-17 20:11:16 (Asia/Damascus / GMT+03:00)
-- **Modified**: 2026-01-17 20:11:16 (Asia/Damascus / GMT+03:00)
-- **MD5**: `1ee05c11c3a35c4affc4fafd4e397674`
-- **SHA256**: `fed5c7a1ae7af70d7ad5bedb1ce3fc8c6c85ab81370cab54604d036ed139fa6b`
+- **Modified**: 2026-01-20 13:19:07 (Asia/Damascus / GMT+03:00)
+- **MD5**: `5e5955bfcfcfe2b34f0f29506e1cb3bd`
+- **SHA256**: `d7dee64a5b6a5a98a5040f964e1355897e163592999d02b55c71aa0bac69f87d`
 - **Encoding**: ASCII
 
 **File code content:**
@@ -896,6 +898,7 @@ class cell:
 """
 This is main file where is an entry point to our project
 """
+import math
 from GameEngine.State import State
 from GameEngine.Chance import Chance
 from GameEngine.Player import HumanPlayer
@@ -905,10 +908,21 @@ from colorama import Fore, Back, Style
 def main():
     state = State()
     chance = Chance()
-    depth = int(input(Fore.WHITE + "Enter deptth you wanna to play with:"))
-    debug = input("Show AI debug info? (y/n): ").strip().lower() == "y"
-    ai_player = AIPlayer(chance_model=chance,max_depth = depth,debug=debug)
-    state.play_ai_vs_human(ai_player,debug=debug)
+    # depth = int(input(Fore.WHITE + "Enter deptth you wanna to play with:"))
+    # debug = input("Show AI debug info? (y/n): ").strip().lower() == "y"
+    # ai_player = AIPlayer(chance_model=chance,max_depth = depth,debug=debug)
+    # state.play_ai_vs_human(ai_player,debug=debug)
+    depth = int(input("Enter depth: "))
+    ai_player = AIPlayer(chance_model=chance, max_depth=depth)
+    move = ai_player.choose_move(state, options=1)
+    print("WITHOUT USING ALPHA/BETA:")
+    print("Move chosen:", move)
+    print("Nodes expanded:", ai_player.last_choice_nodes)
+    print("Time:", ai_player.last_choice_time)
+    print("Eval:", ai_player.last_choice_value)
+    
+    
+    
     # player_max = AIPlayer(chance_model=chance,max_depth=4)
     # player_min = HumanPlayer()
 
