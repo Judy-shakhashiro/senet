@@ -153,8 +153,8 @@ class State:
                     self.cells[index].player=None
                     
     
-        self.turnCount +=1
-        self.current_player ^= 1
+        # self.turnCount +=1
+        # self.current_player ^= 1
         return self
     
     def legal_moves(self):
@@ -285,7 +285,7 @@ class State:
     #      case 'human'
 
 
-    def play_two_players(self, player1 , player2 ,chance,debug:bool=False):
+    def play_two_players(self, player1 , player2 ,chance,debug1:bool=False ,debug2:bool=False ):
         while not self.is_end():
             self.display()
             self.rolled_value=chance.roll_table()
@@ -305,23 +305,27 @@ class State:
             if self.current_player == 1:
                 move = player1.choose_move(self,self.rolled_value)
                 print(Fore.BLUE + f"Player1 choose move:{move}")
-                if debug:
+                if debug1:
                         v = player1.last_choice_value
                         n = player1.last_choice_nodes
                         t = player1.last_choice_time
                         ev = player1.last_choice_eval
                         print(Fore.CYAN + f"[DEBUG] val={v}    eval={ev:}  nodes={n}  time={t:}s")
                 self.move_piece(move)
+                self.current_player ^= 1
+                self.turnCount +=1
             else:
                 move = player2.choose_move(self , self.rolled_value)
                 print(Fore.MAGENTA + f"Player 2 chose: {move}")
-                if debug:
+                if debug2:
                         v = player2.last_choice_value
                         n = player2.last_choice_nodes
                         t = player2.last_choice_time
                         ev = player2.last_choice_eval
                         print(Fore.MAGENTA + f"[DEBUG] val={v}    eval={ev:}  nodes={n}  time={t:}s")
                 self.move_piece(move)
+                self.current_player ^= 1
+                self.turnCount +=1
 
 
         if self.winner_player == "white":
