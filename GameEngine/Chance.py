@@ -2,7 +2,7 @@ import numpy as np
 from typing import List, Tuple
 class Chance:
     def possible_rolls(self):
-        """ترجع قائمة بجميع القيم الممكنة لرمي العصي مع احتمالاتها"""
+       
         return {1: 4/16, 2: 6/16, 3: 4/16, 4: 1/16, 5: 1/16}
 
 
