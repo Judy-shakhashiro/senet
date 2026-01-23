@@ -93,9 +93,10 @@ class State:
         # if newpiece location is water ,go to rebirth
         if index+self.rolled_value==26 :
             
-            self.to_rebirth(index+self.rolled_value)
+            self.to_rebirth(index)
             # self.turnCount+=1
             # self.current_player ^=1
+
             return self
             
         # else if toss is 3 and cells[index].type is house of three truths then promote()
