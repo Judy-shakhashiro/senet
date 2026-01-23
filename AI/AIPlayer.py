@@ -159,8 +159,8 @@ def evaluate(state: State)  :
 
     score = 0.0
 
-    score += out_weight * state.white_pieces
-    score -= out_weight * state.black_pieces
+    score += out_weight * state.blue_pieces
+    score -= out_weight * state.magenta_pieces
 
     #evaluate the progress of blocks 
     for i, cell in enumerate(state.cells):

@@ -13,8 +13,8 @@ class Cell:
 class State:
     def __init__(self,turnCount:int=0,last_hit = None):
         self.cells=self.initialize_board()
-        self.white_pieces=0
-        self.black_pieces=0
+        self.blue_pieces=0
+        self.magenta_pieces=0
         self.current_player=1  
         self.winner_player=None
         self.game_over=False
@@ -34,8 +34,8 @@ class State:
                 print(Fore.RESET + cell.type, end=' ')
             if (i+1)%10==0:
                 print() 
-        for i in range(10,20):
-            cell=self.cells[29-i]
+        for i in range(10):
+            cell=self.cells[20-i]
             if cell.player==1:
                 print(Fore.BLUE + cell.type, end=' ')
             elif cell.player==0:
@@ -127,9 +127,10 @@ class State:
         if self.cells[29].player==self.current_player:
             if index==29:
                 self.promote(index)
-                # self.turnCount += 1
-                # self.current_player ^= 1
+
                 return self
+            else:
+                self.to_rebirth(29)
                 
         # if a pawn is in the happiness and we rolled is 5 and player wanna move it
         if self.cells[25].player==self.current_player:
@@ -140,7 +141,7 @@ class State:
                 return self
         
 
-        # else (alter between black and white or to an empty space) 
+        # else (alter between magenta and blue or to an empty space) 
         if index+self.rolled_value<30:
                 # we checked previously in the valid move if the taret is not the same color as the current pawn
                
@@ -197,9 +198,9 @@ class State:
     def promote(self,index):
         self.cells[index].player= None
         if (self.current_player==0):
-            self.black_pieces+=1
+            self.magenta_pieces+=1
         else:
-            self.white_pieces+=1
+            self.blue_pieces+=1
 
     def to_rebirth(self,index):
       
@@ -222,10 +223,10 @@ class State:
             self.display()
             #check win
             
-            if(self.white_pieces==7):
+            if(self.blue_pieces==7):
                 print(Fore.BLUE+'blue won !')
                 return
-            elif(self.black_pieces==7):
+            elif(self.magenta_pieces==7):
                 print(Fore.MAGENTA+'magenta won !')
                 return 
             chance=Chance()
@@ -274,11 +275,11 @@ class State:
         return False
     
     def winner(self)->int:
-        if self.black_pieces == 7:
-            self.winner_player = "black"
+        if self.magenta_pieces == 7:
+            self.winner_player = "magenta"
             return 0
-        if self.white_pieces==7:
-            self.winner_player = "white" 
+        if self.blue_pieces==7:
+            self.winner_player = "blue" 
             return 1
         return None  
     # def play(player1,player2):
@@ -298,7 +299,8 @@ class State:
                 print(Fore.MAGENTA + f"Player 2 (magenta) rolled {self.rolled_value}")
                 print(Fore.MAGENTA + f"Valid moves : {moves}")
             if not moves:
-                print(Fore.YELLOW + "No valid moves == turn skipped")
+                self.move_piece(50)
+                print(Fore.YELLOW + "No valid moves, turn skipped")
                 self.current_player ^= 1
                 self.turnCount +=1
                 continue
@@ -329,7 +331,7 @@ class State:
                 self.turnCount +=1
 
 
-        if self.winner_player == "white":
+        if self.winner_player == "blue":
             print(Fore.BLUE + "BLUE (player 1) WON")
         else:
             print(Fore.MAGENTA + "MAGENTA (player 2) WON")   
